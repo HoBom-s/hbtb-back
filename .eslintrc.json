@@ -1,18 +1,20 @@
 {
-  "root": true,
   "env": {
-    "node": true,
-    "browser": false
+    "browser": true,
+    "es2020": true
   },
-  "parser": "babel-eslint",
+  "extends": ["eslint:recommended"],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
   "parserOptions": {
-    "ecmaVersion": 2020,
-    "sourceType": "script"
+    "ecmaVersion": "latest",
+    "sourceType": "module"
   },
-  "plugins": ["import"],
-  "extends": ["eslint:recommended", "plugin:prettier/recommended"],
-  "ignorePatterns": ["node_modules/"],
   "rules": {
-    "no-var": ["error"]
+    "no-unused-vars": "error",
+    "no-var": "error",
+    "quotes": ["error", "double"]
   }
 }
