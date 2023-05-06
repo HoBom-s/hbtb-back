@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import config from "../../config";
+import config from "../config";
 
 const mongoUrl = `mongodb+srv://${config.mongo.MONGO_HOST}:${config.mongo.MONGO_PASSWORD}@cluster0.cpsxc80.mongodb.net/?retryWrites=true&w=majority`;
 
