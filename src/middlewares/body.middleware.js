@@ -29,7 +29,7 @@ function bodyValidation(target) {
     // Status: 400
     const { error } = validatorModelHelper
       .asJoiSchema(target)
-      .validate(validatorModelHelper[target]);
+      .validate(requestBody);
     if (error) {
       const errorHandler = new APIErrorHandler(
         `${target} body Joi Validation Schema error!`,

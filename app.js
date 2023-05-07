@@ -3,6 +3,7 @@ import helmet from "helmet";
 import cors from "cors";
 import dotenv from "dotenv";
 import initializeDataBase from "./database";
+import tagRouter from "./src/routes/tag.router";
 
 dotenv.config();
 
@@ -18,6 +19,8 @@ app.use(
     credentials: true,
   })
 );
+
+app.use("/tag", tagRouter);
 
 app.listen(8081, () => {
   console.log("The HBTB BackEnd Node Express server is listening");

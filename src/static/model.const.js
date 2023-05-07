@@ -3,5 +3,6 @@
  */
 
 const STATIC_ARTICLE = "article";
+const STATIC_TAG = "tag";
 
-export { STATIC_ARTICLE };
+export { STATIC_ARTICLE, STATIC_TAG };
