@@ -11,6 +11,9 @@ const validatorModelHelper = {
     title: Joi.string().required(),
     subTitle: Joi.string().required(),
   },
+  tag: {
+    title: Joi.string().required(),
+  },
 };
 
 /**
