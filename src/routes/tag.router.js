@@ -5,6 +5,8 @@ import tagController from "../controllers/tag.controller";
 
 const router = express.Router();
 
+router.get("/", tagController.getAllTagRequest);
+
 router.post(
   "/create",
   bodyValidation(STATIC_TAG),
