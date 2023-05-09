@@ -18,7 +18,7 @@ MongoDB의 Collection에 해당하는 구조를 이 문서에 기록하도록 �
 
 ## 1. Tag Schema 정의
 
-**Tag**의 경우 Article [게시글] 생성 시 해당 게시글에 붙게 될 태그를 정의하는 Schema 이다.
+**Tag**의 경우 Article **`[게시글]`** 생성 시 해당 게시글에 붙게 될 태그를 정의하는 Schema 이다.
 
 **검색**필터로 사용될 수도 있다.
 
@@ -41,6 +41,48 @@ MongoDB의 Collection에 해당하는 구조를 이 문서에 기록하도록 �
         type: Date,
         required: true,
         default: Date.now
+    }
+}
+```
+
+## 2. Category Schema 정의
+
+**Category**의 경우 Category **`[카테고리]`** 생성 시 카테고리를 정의하는 Schema 이다.
+
+```js
+{
+    // category.schema.js
+    // CategorySchema
+    _id: {
+        type: String,
+        required: true,
+    },
+    title: {
+        type: String,
+        required: ture,
+        trim: true,
+        default: "",
+        maxLength: 16,
+    },
+    path: {
+        type: String,
+        required: true,
+        trim: true,
+        default: "",
+    },
+    sortIndex: {
+        type: Number,
+        required: true,
+        default: 1,
+    },
+    createdAt: {
+        type: Date,
+        required: true,
+        default: Date.now,
+    },
+    updatedAt: {
+        type: Date,
+        default: Date.now,
     }
 }
 ```

@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import initializeDataBase from "./database";
 import tagRouter from "./src/routes/tag.router";
+import categoryRouter from "./src/routes/category.router";
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.use(
 );
 
 app.use("/tag", tagRouter);
+app.use("/category", categoryRouter);
 
 app.listen(8081, () => {
   console.log("The HBTB BackEnd Node Express server is listening");
