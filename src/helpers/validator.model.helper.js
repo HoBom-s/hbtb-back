@@ -7,12 +7,36 @@ import APIErrorHandler from "./error.helper";
  * 사용자로부터 넘어온 Request body 값을 검증하기 위한 모델 Object
  */
 const validatorModelHelper = {
+  // Article Create
   article: {
     title: Joi.string().required(),
     subTitle: Joi.string().required(),
   },
+
+  // Tag Create
   tag: {
     title: Joi.string().required(),
+  },
+
+  // Category Create
+  category: {
+    title: Joi.string().required(),
+    path: Joi.string().required(),
+    sortIndex: Joi.number().positive().required(),
+  },
+
+  // Category Update
+  categoryUpdate: {
+    _id: Joi.string().required(),
+    title: Joi.string().required(),
+    path: Joi.string().required(),
+    sortIndex: Joi.number().required(),
+    updatedAt: Joi.string().required(),
+  },
+
+  // Category Delete
+  categoryDelete: {
+    _id: Joi.string().required(),
   },
 };
 
