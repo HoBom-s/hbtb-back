@@ -35,9 +35,17 @@ const options = {
           parameters: [
             {
               in: "body",
-              name: "body",
-              description: "태그 title, path",
+              name: "title",
+              description: "태그 이름",
               required: true,
+              type: "string",
+            },
+            {
+              in: "body",
+              name: "path",
+              description: "url용 태그 영문 경로",
+              required: true,
+              type: "string",
             },
           ],
           responses: {
