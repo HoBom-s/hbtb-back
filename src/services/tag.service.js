@@ -25,7 +25,7 @@ tagService.getAllTagRequest = async function () {
   }
 };
 
-tagService.createTagRequest = async function (title) {
+tagService.createTagRequest = async function (title, path) {
   try {
     const found = await TagModel.findOne({ title: title }).exec();
     if (found) {
@@ -37,6 +37,8 @@ tagService.createTagRequest = async function (title) {
     const createdTag = await TagModel.create({
       _id: uuid4(),
       title: title,
+      path: path,
+      count: 0,
       createdAt: Date.now(),
     });
     return createdTag;
@@ -47,6 +49,38 @@ tagService.createTagRequest = async function (title) {
     );
     const { status, msg } = apiError;
     throw new Error(`The create tag service error with ${status}! ${msg}`);
+  }
+};
+
+tagService.updateTagRequest = async function (_id, title, path, count) {
+  try {
+    const updatedTag = await TagModel.updateOne(
+      {
+        _id: _id,
+      },
+      {
+        title: title,
+        path: path,
+        count: count,
+      }
+    );
+    const { acknowledged } = updatedTag;
+    if (acknowledged) {
+      return {
+        _id: _id,
+        title: title,
+        path: path,
+        count: count,
+      };
+    }
+    return null;
+  } catch (error) {
+    const apiError = new APIErrorHandler(
+      `Update tag request fail! with ${error.message}`,
+      500
+    );
+    const { status, msg } = apiError;
+    throw new Error(`The update tag service error with ${status}! ${msg}`);
   }
 };
 

@@ -50,6 +50,21 @@ const CategorySchema = new Schema(
     },
 
     /**
+     * 카테고리가 추가되는 위치에 대한 구분 값
+     * 이후에 다른 위치에 대한 확장성 고려를 위해 타입을 String으로 지정
+     * Header: H
+     * Footer: F
+     */
+    spot: {
+      type: String,
+      required: true,
+      trim: true,
+      default: "H",
+      minLength: 1,
+      maxLength: 1,
+    },
+
+    /**
      * Category 최초 생성 날짜
      */
     createdAt: {
