@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import initializeDataBase from "./database";
 import tagRouter from "./src/routes/tag.router";
 import categoryRouter from "./src/routes/category.router";
+import { swaggerUi, specs } from "./docs";
 
 dotenv.config();
 
@@ -23,6 +24,8 @@ app.use(
 
 app.use("/tag", tagRouter);
 app.use("/category", categoryRouter);
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 app.listen(8081, () => {
   console.log("The HBTB BackEnd Node Express server is listening");

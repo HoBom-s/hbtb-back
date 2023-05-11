@@ -6,10 +6,10 @@ const options = {
     info: {
       title: "HoBom Tech Blog API Documents",
       version: "Docs Version: 1.0.0",
-      description: "HoBom BackEnd with Node Express",
+      description: "HoBom Tech Blog backEnd with Node Express",
     },
   },
-  apis: ["../src/routes/*.js", "./*"],
+  apis: ["../src/routes/*.js"],
 };
 
 const specs = swaggerJSDoc(options);
