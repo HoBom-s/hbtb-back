@@ -16,6 +16,14 @@ const validatorModelHelper = {
   // Tag Create
   tag: {
     title: Joi.string().required(),
+    path: Joi.string().required(),
+  },
+  // Tag Update
+  tagUpdate: {
+    _id: Joi.string().required(),
+    title: Joi.string().required(),
+    path: Joi.string().required(),
+    count: Joi.number().min(0).required(),
   },
 
   // Category Create
@@ -23,6 +31,7 @@ const validatorModelHelper = {
     title: Joi.string().required(),
     path: Joi.string().required(),
     sortIndex: Joi.number().positive().required(),
+    spot: Joi.string().min(1).max(1).required(),
   },
 
   // Category Update
@@ -31,6 +40,7 @@ const validatorModelHelper = {
     title: Joi.string().required(),
     path: Joi.string().required(),
     sortIndex: Joi.number().required(),
+    spot: Joi.string().min(1).max(1).required(),
     updatedAt: Joi.string().required(),
   },
 
