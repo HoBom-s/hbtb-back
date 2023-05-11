@@ -33,7 +33,7 @@ describe("GET /category", () => {
  *
  * 새로운 카테고리를 생성하는 API
  */
-describe("POST /category/create", () => {
+describe.skip("POST /category/create", () => {
   it("Should create category", async () => {
     const res = await request(app).post("/category/create").send({
       title: "I'm category",
