@@ -10,7 +10,11 @@ const categoryService = {};
 
 categoryService.getAllCategoryRequest = async function () {
   try {
-    const categories = await CategoryModel.find({});
+    const categories = await CategoryModel.find({}, null, {
+      sort: {
+        sortIndex: 1,
+      },
+    });
     if (!categories.length) return [];
     return categories;
   } catch (error) {
@@ -28,7 +32,8 @@ categoryService.getAllCategoryRequest = async function () {
 categoryService.createCategoryRequest = async function (
   title,
   path,
-  sortIndex
+  sortIndex,
+  spot
 ) {
   try {
     const found = await CategoryModel.findOne({ title: title }).exec();
@@ -46,6 +51,7 @@ categoryService.createCategoryRequest = async function (
       title: title,
       path: path,
       sortIndex: sortIndex,
+      spot: spot,
       createdAt: Date.now(),
       updatedAt: Date.now(),
     });
@@ -65,6 +71,7 @@ categoryService.updateCategoryRequest = async function (
   title,
   path,
   sortIndex,
+  spot,
   updatedAt
 ) {
   try {
@@ -76,6 +83,7 @@ categoryService.updateCategoryRequest = async function (
         title: title,
         path: path,
         sortIndex: sortIndex,
+        spot: spot,
         updatedAt: updatedAt,
       }
     );

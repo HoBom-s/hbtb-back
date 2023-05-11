@@ -34,3 +34,5 @@ app.use(
 app.listen(8081, () => {
   console.log("The HBTB BackEnd Node Express server is listening");
 });
+
+export default app;

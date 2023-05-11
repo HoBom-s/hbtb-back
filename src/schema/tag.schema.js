@@ -30,6 +30,25 @@ const TagSchema = new Schema(
     },
 
     /**
+     * Tag를 눌렀을 때 이동될 Path 정의
+     */
+    path: {
+      type: String,
+      required: true,
+      trim: true,
+      default: "",
+    },
+
+    /**
+     * Tag가 눌려졌을 때 증가할 Count 값
+     * 이후 대시보드에서 모니터링할 때 필요할 값
+     */
+    count: {
+      type: Number,
+      default: 0,
+    },
+
+    /**
      * Tag first create date
      */
     createdAt: {
