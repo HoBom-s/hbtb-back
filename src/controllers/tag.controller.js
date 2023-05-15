@@ -61,5 +61,27 @@ tagController.updateTagReqest = async function (req, res) {
   }
 };
 
+tagController.deleteTagRequest = async function (req, res) {
+  try {
+    const { _id } = req.params;
+    const deletedTag = await tagService.deleteTagRequest(_id);
+    if (!deletedTag) {
+      return res.status(404).send({
+        message: "Delete tag request controller fail",
+      });
+    }
+    res.status(200).send(deletedTag);
+  } catch (error) {
+    const apiError = new APIErrorHandler(
+      `Delete tag request controller fail with ${error.message}`,
+      error.status
+    );
+    const { status, msg } = apiError;
+    res.status(status).send({
+      message: msg,
+    });
+  }
+};
+
 Object.freeze(tagController);
 export default tagController;
