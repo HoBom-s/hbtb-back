@@ -82,7 +82,7 @@ categoryController.deleteCategoryRequest = async function (req, res) {
     const { _id } = req.params;
     const deletedCategory = await categoryService.deleteCategoryRequest(_id);
     if (!deletedCategory) {
-      return res.status(400).send({
+      return res.status(404).send({
         message: "Delete category request controller fail",
       });
     }
