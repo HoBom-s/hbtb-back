@@ -8,7 +8,7 @@ MongoDB의 Collection에 해당하는 구조를 이 문서에 기록하도록 �
 
 > 최초 생성일: 23.05.08
 >
-> 수정일: 23.05.08
+> 수정일: 23.05.15
 
 | 작성자       | 문서버전 |
 | ------------ | -------- |
@@ -36,6 +36,16 @@ MongoDB의 Collection에 해당하는 구조를 이 문서에 기록하도록 �
         trim: true,
         default: "",
         maxLength: 24,
+    },
+    path: {
+        type: String,
+        required: true,
+        trim: true,
+        default: "",
+    },
+    count: {
+        type: Number,
+        default: 0,
     },
     createdAt: {
         type: Date,
@@ -74,6 +84,14 @@ MongoDB의 Collection에 해당하는 구조를 이 문서에 기록하도록 �
         type: Number,
         required: true,
         default: 1,
+    },
+    spot: {
+        type: String,
+        required: true,
+        trim: true,
+        default: "H",
+        minLength: 1,
+        maxLength: 1,
     },
     createdAt: {
         type: Date,
