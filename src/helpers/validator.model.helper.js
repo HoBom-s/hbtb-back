@@ -25,6 +25,10 @@ const validatorModelHelper = {
     path: Joi.string().required(),
     count: Joi.number().min(0).required(),
   },
+  // Tag Delete
+  tagDelete: {
+    _id: Joi.string().required(),
+  },
 
   // Category Create
   category: {

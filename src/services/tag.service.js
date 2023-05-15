@@ -84,5 +84,23 @@ tagService.updateTagRequest = async function (_id, title, path, count) {
   }
 };
 
+tagService.deleteTagRequest = async function (_id) {
+  try {
+    const deleteTagInfo = await TagModel.deleteOne({ _id: _id });
+    const { acknowledged } = deleteTagInfo;
+    if (!acknowledged) {
+      return null;
+    }
+    return _id;
+  } catch (error) {
+    const apiError = new APIErrorHandler(
+      `Delete tag request fail! with ${error.message}`,
+      500
+    );
+    const { status, msg } = apiError;
+    throw new Error(`The delete tag service error with ${status}! ${msg}`);
+  }
+};
+
 Object.freeze(tagService);
 export default tagService;
