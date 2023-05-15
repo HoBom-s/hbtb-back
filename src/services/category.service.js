@@ -4,7 +4,7 @@ import APIErrorHandler from "../helpers/error.helper";
 
 /**
  * Category Service
- * Business login of category
+ * Business logic of category
  */
 const categoryService = {};
 
