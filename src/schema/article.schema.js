@@ -37,59 +37,15 @@ const ArticleSchema = new Schema(
     },
 
     /**
-     * User information of Article
-     * Type: Map
-     */
-    user: {
-      type: Schema.Types.Map,
-      of: new Schema({
-        _id: {
-          type: String,
-          required: true,
-        },
-        email: {
-          type: String,
-          required: true,
-        },
-        username: {
-          type: String,
-          required: true,
-        },
-        nickname: {
-          type: String,
-          required: true,
-        },
-        kind: {
-          type: String,
-          required: true,
-        },
-      }),
-      required: true,
-    },
-
-    /**
      * Article related tag
      * Type: Array of Maps
      */
-    tags: {
-      type: [Schema.Types.Map],
-      of: new Schema({
-        _id: {
-          type: String,
-          required: true,
-        },
-        title: {
-          type: String,
-          required: true,
-        },
-        createdAt: {
-          type: Date,
-          required: true,
-          default: Date.now,
-        },
-      }),
-      required: false,
-    },
+    tags: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Tag",
+      },
+    ],
 
     /**
      * Article first create date

@@ -4,7 +4,7 @@ import APIErrorHandler from "../helpers/error.helper";
 
 /**
  * Category Service
- * Business login of category
+ * Business logic of category
  */
 const categoryService = {};
 
@@ -14,7 +14,7 @@ categoryService.getAllCategoryRequest = async function () {
       sort: {
         sortIndex: 1,
       },
-    });
+    }).exec();
     if (!categories.length) return [];
     return categories;
   } catch (error) {
@@ -86,7 +86,7 @@ categoryService.updateCategoryRequest = async function (
         spot: spot,
         updatedAt: updatedAt,
       }
-    );
+    ).exec();
     const { acknowledged } = updatedInfo;
     if (acknowledged) return _id;
     return null;
@@ -102,7 +102,9 @@ categoryService.updateCategoryRequest = async function (
 
 categoryService.deleteCategoryRequest = async function (_id) {
   try {
-    const deleteCategoryInfo = await CategoryModel.deleteOne({ _id: _id });
+    const deleteCategoryInfo = await CategoryModel.deleteOne({
+      _id: _id,
+    }).exec();
     const { acknowledged } = deleteCategoryInfo;
     if (!acknowledged) {
       return null;

@@ -10,7 +10,7 @@ const tagService = {};
 
 tagService.getAllTagRequest = async function () {
   try {
-    const tags = await TagModel.find({});
+    const tags = await TagModel.find({}).exec();
     if (!tags.length) return [];
     return tags;
   } catch (error) {
@@ -63,7 +63,7 @@ tagService.updateTagRequest = async function (_id, title, path, count) {
         path: path,
         count: count,
       }
-    );
+    ).exec();
     const { acknowledged } = updatedTag;
     if (acknowledged) {
       return {
@@ -86,7 +86,7 @@ tagService.updateTagRequest = async function (_id, title, path, count) {
 
 tagService.deleteTagRequest = async function (_id) {
   try {
-    const deleteTagInfo = await TagModel.deleteOne({ _id: _id });
+    const deleteTagInfo = await TagModel.deleteOne({ _id: _id }).exec();
     const { acknowledged } = deleteTagInfo;
     if (!acknowledged) {
       return null;
