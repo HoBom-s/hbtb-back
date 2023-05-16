@@ -37,17 +37,6 @@ const ArticleSchema = new Schema(
     },
 
     /**
-     * Article related tag
-     * Type: Array of Maps
-     */
-    tags: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Tag",
-      },
-    ],
-
-    /**
      * Article first create date
      */
     createdAt: {
