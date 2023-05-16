@@ -85,7 +85,7 @@ const categoryComponents = {
   categoryDelete: {
     delete: {
       tags: ["Category"],
-      summary: "작성된 커택ㅎ라 삭제하기",
+      summary: "작성된 카테고리 삭제하기",
       parameters: [
         {
           in: "path",
