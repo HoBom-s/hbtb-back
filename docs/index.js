@@ -1,6 +1,9 @@
 import swaggerUi from "swagger-ui-express";
 import swaggerJSDoc from "swagger-jsdoc";
 
+import tagComponents from "./tags";
+import categoryComponents from "./categories";
+
 const options = {
   swaggerDefinition: {
     info: {
@@ -9,52 +12,29 @@ const options = {
       description: "HoBom Tech Blog backEnd with Node Express",
     },
     host: "localhost:8081",
+    /**
+     * 각각의 Tag를 정의하여 API Component의 문서마다 Tags에 해당하는 카테고리를 지정
+     * Tag Grouping 역할
+     */
     tags: [
       {
-        name: "tag",
-        description: "게시글 태그관련 API",
+        name: "Tag",
+        description: "태그 관련 API",
+      },
+      {
+        name: "Category",
+        description: "카테고리 관련 API",
       },
     ],
     paths: {
-      "/tag": {
-        get: {
-          tags: ["tag"],
-          summary: "모든 태그 불러오기",
-          responses: {
-            200: {
-              description: "태그 불러오기 성공",
-            },
-          },
-        },
-      },
-
-      "/tag/create": {
-        post: {
-          tags: ["tag"],
-          summary: "새롭게 작성된 태그 등록하기",
-          parameters: [
-            {
-              in: "body",
-              name: "title",
-              description: "태그 이름",
-              required: true,
-              type: "string",
-            },
-            {
-              in: "body",
-              name: "path",
-              description: "url용 태그 영문 경로",
-              required: true,
-              type: "string",
-            },
-          ],
-          responses: {
-            200: {
-              description: "태그 등록 성공",
-            },
-          },
-        },
-      },
+      "/tag": tagComponents.tagAll,
+      "/tag/create": tagComponents.tagCreate,
+      "/tag/update": tagComponents.tagUpdate,
+      "/tag/delete/:_id": tagComponents.tagDelete,
+      "/category": categoryComponents.categoryAll,
+      "/category/create": categoryComponents.categoryCreate,
+      "/category/update": categoryComponents.categoryUpdate,
+      "/category/:_id": categoryComponents.categoryDelete,
     },
   },
   apis: ["../src/routes/*.js"],
