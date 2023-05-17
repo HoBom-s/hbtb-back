@@ -45,7 +45,6 @@ const validatorModelHelper = {
     path: Joi.string().required(),
     sortIndex: Joi.number().required(),
     spot: Joi.string().min(1).max(1).required(),
-    updatedAt: Joi.string().required(),
   },
 
   // Category Delete
