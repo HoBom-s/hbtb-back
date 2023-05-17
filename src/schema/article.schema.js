@@ -17,6 +17,15 @@ const ArticleSchema = new Schema(
     },
 
     /**
+     * Article thumbnail
+     */
+    thumbnail: {
+      type: String,
+      required: true,
+      default: "",
+    },
+
+    /**
      * Article Main Title
      */
     title: {
@@ -27,7 +36,7 @@ const ArticleSchema = new Schema(
     },
 
     /**
-     * Article Sub Title
+     * Article Sub Title (Description under each title)
      */
     subTitle: {
       type: String,
@@ -35,6 +44,23 @@ const ArticleSchema = new Schema(
       trim: true,
       default: "",
     },
+
+    /**
+     * Article temporary contents schema
+     */
+    contents: {
+      type: String,
+      required: true,
+      default: "Temp article contents",
+    },
+
+    /**
+     * Article tags(Tag Collection)
+     */
+
+    /**
+     * Article writer(User Collection)
+     */
 
     /**
      * Article first create date
