@@ -1,5 +1,5 @@
 import { v4 as uuid4 } from "uuid";
-import TagModel from "../schema/tag.schema";
+import { TagModel } from "../schema/tag.schema";
 import APIErrorHandler from "../helpers/error.helper";
 
 /**

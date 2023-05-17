@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import { UserSchema } from "./user.schema";
+import { TagSchema } from "./tag.schema";
 
 const Schema = mongoose.Schema;
 
@@ -21,7 +23,6 @@ const ArticleSchema = new Schema(
      */
     thumbnail: {
       type: String,
-      required: true,
       default: "",
     },
 
@@ -57,10 +58,18 @@ const ArticleSchema = new Schema(
     /**
      * Article tags(Tag Collection)
      */
+    tags: {
+      type: Array,
+      of: TagSchema,
+    },
 
     /**
      * Article writer(User Collection)
      */
+    writer: {
+      type: Array,
+      of: UserSchema,
+    },
 
     /**
      * Article first create date
@@ -68,7 +77,7 @@ const ArticleSchema = new Schema(
     createdAt: {
       type: Date,
       required: true,
-      default: Date.now,
+      default: new Date(),
     },
 
     /**
