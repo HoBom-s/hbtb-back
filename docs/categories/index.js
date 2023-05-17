@@ -34,6 +34,30 @@ const categoryComponents = {
     post: {
       tags: ["Category"],
       summary: "새로운 카테고리 생성하기",
+      parameters: [
+        {
+          in: "body",
+          name: "Category",
+          required: true,
+          description: "Create Tag 생성하기의 Request Body",
+          schema: {
+            properties: {
+              _id: {
+                type: "string",
+              },
+              title: {
+                type: "string",
+              },
+              path: {
+                type: "string",
+              },
+              count: {
+                type: "integer",
+              },
+            },
+          },
+        },
+      ],
       responses: {
         200: {
           description: "카테고리 생성하기 성공",
@@ -63,6 +87,33 @@ const categoryComponents = {
     patch: {
       tags: ["Category"],
       summary: "카테고리 수정하기",
+      parameters: [
+        {
+          in: "body",
+          name: "Category",
+          required: true,
+          description: "Create Tag 수정하기의 Request Body",
+          schema: {
+            properties: {
+              _id: {
+                type: "string",
+              },
+              title: {
+                type: "string",
+              },
+              path: {
+                type: "string",
+              },
+              sortIndex: {
+                type: "integer",
+              },
+              spot: {
+                type: "string",
+              },
+            },
+          },
+        },
+      ],
       responses: {
         200: {
           description: "카테고리 수정하기 성공",
