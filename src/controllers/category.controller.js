@@ -50,14 +50,13 @@ categoryController.createCategoryRequest = async function (req, res) {
 
 categoryController.updateCategoryRequest = async function (req, res) {
   try {
-    const { _id, title, path, sortIndex, spot, updatedAt } = req.body;
+    const { _id, title, path, sortIndex, spot } = req.body;
     const updatedCategory = await categoryService.updateCategoryRequest(
       _id,
       title,
       path,
       sortIndex,
-      spot,
-      updatedAt
+      spot
     );
     if (!updatedCategory) {
       return res.status(400).send({

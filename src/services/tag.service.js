@@ -39,7 +39,7 @@ tagService.createTagRequest = async function (title, path) {
       title: title,
       path: path,
       count: 0,
-      createdAt: Date.now(),
+      createdAt: new Date(),
     });
     return createdTag;
   } catch (error) {

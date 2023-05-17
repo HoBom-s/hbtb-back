@@ -74,6 +74,11 @@ const categoryComponents = {
                 type: "string",
                 example: {
                   _id: "Category 의 고유 ID",
+                  title: "Category 의 이름",
+                  path: "Category 클릭 시 이동될 Path 값",
+                  sortIndex: "Category 의 정렬 우선순위 값",
+                  spot: "Category 가 위치할 기준 값",
+                  updatedAt: "Category 수정 날짜",
                 },
               },
             },
@@ -95,6 +100,23 @@ const categoryComponents = {
           type: "string",
         },
       ],
+      responses: {
+        200: {
+          description: "카테고리 삭제 성공",
+        },
+        content: {
+          schema: {
+            properties: {
+              data: {
+                type: "string",
+                example: {
+                  _id: "Category 의 고유 ID",
+                },
+              },
+            },
+          },
+        },
+      },
     },
   },
 };
