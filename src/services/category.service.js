@@ -52,8 +52,8 @@ categoryService.createCategoryRequest = async function (
       path: path,
       sortIndex: sortIndex,
       spot: spot,
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
     });
     return createdCategory;
   } catch (error) {
@@ -71,8 +71,7 @@ categoryService.updateCategoryRequest = async function (
   title,
   path,
   sortIndex,
-  spot,
-  updatedAt
+  spot
 ) {
   try {
     const updatedInfo = await CategoryModel.updateOne(
@@ -84,11 +83,19 @@ categoryService.updateCategoryRequest = async function (
         path: path,
         sortIndex: sortIndex,
         spot: spot,
-        updatedAt: updatedAt,
       }
     ).exec();
     const { acknowledged } = updatedInfo;
-    if (acknowledged) return _id;
+    if (acknowledged) {
+      return {
+        _id: _id,
+        title: title,
+        path: path,
+        sortIndex: sortIndex,
+        spot: spot,
+        updatedAt: new Date(),
+      };
+    }
     return null;
   } catch (error) {
     const apiError = new APIErrorHandler(
