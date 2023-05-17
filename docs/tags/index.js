@@ -94,6 +94,23 @@ const tagComponents = {
           type: "string",
         },
       ],
+      responses: {
+        200: {
+          description: "태그 삭제 성공",
+        },
+        content: {
+          schema: {
+            properties: {
+              data: {
+                type: "object",
+                example: {
+                  _id: "Tag 의 고유 ID",
+                },
+              },
+            },
+          },
+        },
+      },
     },
   },
 };
