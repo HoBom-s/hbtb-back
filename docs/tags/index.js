@@ -32,6 +32,24 @@ const tagComponents = {
     post: {
       tags: ["Tag"],
       summary: "새롭게 작성된 태그 등록하기",
+      parameters: [
+        {
+          in: "body",
+          name: "Tag",
+          required: true,
+          description: "Create Tag 의 Request Body",
+          schema: {
+            properties: {
+              title: {
+                type: "string",
+              },
+              path: {
+                type: "string",
+              },
+            },
+          },
+        },
+      ],
       responses: {
         200: {
           description: "태그 등록 성공",
@@ -59,6 +77,30 @@ const tagComponents = {
     patch: {
       tags: ["Tag"],
       summary: "작성된 태그 수정하기",
+      parameters: [
+        {
+          in: "body",
+          name: "Tag",
+          required: true,
+          description: "Update Tag 의 Request Body",
+          schema: {
+            properties: {
+              _id: {
+                type: "string",
+              },
+              title: {
+                type: "string",
+              },
+              path: {
+                type: "string",
+              },
+              count: {
+                type: "integer",
+              },
+            },
+          },
+        },
+      ],
       responses: {
         200: {
           description: "태그 수정 성공",
