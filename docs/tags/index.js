@@ -82,7 +82,7 @@ const tagComponents = {
           in: "body",
           name: "Tag",
           required: true,
-          description: "Create Tag 의 Request Body",
+          description: "Update Tag 의 Request Body",
           schema: {
             properties: {
               _id: {

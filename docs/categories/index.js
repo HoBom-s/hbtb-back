@@ -39,7 +39,7 @@ const categoryComponents = {
           in: "body",
           name: "Category",
           required: true,
-          description: "Create Tag 생성하기의 Request Body",
+          description: "Create Category 의 Request Body",
           schema: {
             properties: {
               _id: {
@@ -92,7 +92,7 @@ const categoryComponents = {
           in: "body",
           name: "Category",
           required: true,
-          description: "Create Tag 수정하기의 Request Body",
+          description: "Update Category 의 Request Body",
           schema: {
             properties: {
               _id: {
