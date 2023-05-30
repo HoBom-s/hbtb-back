@@ -12,3 +12,5 @@ router.post(
   bodyValidation(STATIC_ARTICLE),
   articleController.createArticleRequest
 );
+
+export default router;
