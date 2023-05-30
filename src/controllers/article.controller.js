@@ -21,13 +21,14 @@ articleController.getAllArticleRequest = async function (req, res) {
 
 articleController.createArticleRequest = async function (req, res) {
   try {
-    const { thumbnail, title, subtitle, contents, tags } = req.body;
+    const { thumbnail, title, subtitle, contents, tags, writer } = req.body;
     const createdArticle = await articleService.createArticleRequest(
       thumbnail,
       title,
       subtitle,
       contents,
-      tags
+      tags,
+      writer
     );
     return res.status(200).send(createdArticle);
   } catch (error) {

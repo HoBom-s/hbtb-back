@@ -26,7 +26,8 @@ articleService.createArticleRequest = async function (
   title,
   subtitle,
   contents,
-  tags
+  tags,
+  writer
 ) {
   try {
     const foundArticle = await ArticleModel.findOne({
@@ -46,6 +47,7 @@ articleService.createArticleRequest = async function (
       subtitle: subtitle,
       contents: contents,
       tags: tags,
+      writer: writer,
     });
     return createdArticle;
   } catch (error) {
