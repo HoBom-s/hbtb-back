@@ -41,3 +41,5 @@ articleController.createArticleRequest = async function (req, res) {
     });
   }
 };
+
+export default articleController;
