@@ -14,7 +14,7 @@ const validatorModelHelper = {
     subtitle: Joi.string().required(),
     contents: Joi.string().required(),
     tags: Joi.array().required(),
-    writer: Joi.array().required(),
+    writers: Joi.array().required(),
   },
 
   // Tag Create

@@ -6,7 +6,10 @@ const articleService = {};
 
 articleService.getAllArticleRequest = async function () {
   try {
-    const articles = await ArticleModel.find({}).exec();
+    const articles = await ArticleModel.find({})
+      .populate("tags")
+      .populate("wrtiers")
+      .exec();
     if (!articles.length) return [];
     return articles;
   } catch (error) {
@@ -27,11 +30,13 @@ articleService.createArticleRequest = async function (
   subtitle,
   contents,
   tags,
-  writer
+  writers,
+  path
 ) {
   try {
     const foundArticle = await ArticleModel.findOne({
       contents: contents,
+      path: path,
     }).exec();
     if (foundArticle) {
       const error = new APIErrorHandler(
@@ -47,7 +52,8 @@ articleService.createArticleRequest = async function (
       subtitle: subtitle,
       contents: contents,
       tags: tags,
-      writer: writer,
+      writers: writers,
+      path: path,
     });
     return createdArticle;
   } catch (error) {
@@ -62,4 +68,5 @@ articleService.createArticleRequest = async function (
   }
 };
 
+Object.freeze(articleService);
 export default articleService;

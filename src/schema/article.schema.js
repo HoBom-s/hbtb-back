@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import { UserSchema } from "./user.schema";
-import { TagSchema } from "./tag.schema";
+import UserModel from "./user.schema";
+import TagModel from "./tag.schema";
 
 const Schema = mongoose.Schema;
 
@@ -56,19 +56,31 @@ const ArticleSchema = new Schema(
     },
 
     /**
-     * Article tags(Tag Collection)
+     * Article tags(Tag Collection) - populate
      */
-    tags: {
-      type: Array,
-      of: TagSchema,
-    },
+    tags: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: TagModel,
+      },
+    ],
 
     /**
-     * Article writer(User Collection)
+     * Article writer(User Collection) - populate
      */
-    writer: {
-      type: Array,
-      of: UserSchema,
+    writers: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: UserModel,
+      },
+    ],
+
+    /**
+     * Article path - when clicking title
+     */
+    path: {
+      type: String,
+      required: true,
     },
 
     /**
