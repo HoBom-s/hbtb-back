@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import initializeDataBase from "./database";
 import tagRouter from "./src/routes/tag.router";
 import categoryRouter from "./src/routes/category.router";
+import errorMiddleware from "./src/middlewares/error.middleware";
 import { swaggerUi, specs } from "./docs";
 
 dotenv.config();
@@ -30,6 +31,8 @@ app.use(
   swaggerUi.serve,
   swaggerUi.setup(specs, { explorer: true })
 );
+
+app.use(errorMiddleware);
 
 app.listen(8081, () => {
   console.log("The HBTB BackEnd Node Express server is listening");
