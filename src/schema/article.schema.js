@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import { UserSchema } from "./user.schema";
+import { TagSchema } from "./tag.schema";
 
 const Schema = mongoose.Schema;
 
@@ -17,6 +19,14 @@ const ArticleSchema = new Schema(
     },
 
     /**
+     * Article thumbnail
+     */
+    thumbnail: {
+      type: String,
+      default: "",
+    },
+
+    /**
      * Article Main Title
      */
     title: {
@@ -27,7 +37,7 @@ const ArticleSchema = new Schema(
     },
 
     /**
-     * Article Sub Title
+     * Article Sub Title (Description under each title)
      */
     subTitle: {
       type: String,
@@ -37,12 +47,37 @@ const ArticleSchema = new Schema(
     },
 
     /**
+     * Article temporary contents schema
+     */
+    contents: {
+      type: String,
+      required: true,
+      default: "Temp article contents",
+    },
+
+    /**
+     * Article tags(Tag Collection)
+     */
+    tags: {
+      type: Array,
+      of: TagSchema,
+    },
+
+    /**
+     * Article writer(User Collection)
+     */
+    writer: {
+      type: Array,
+      of: UserSchema,
+    },
+
+    /**
      * Article first create date
      */
     createdAt: {
       type: Date,
       required: true,
-      default: Date.now,
+      default: new Date(),
     },
 
     /**
