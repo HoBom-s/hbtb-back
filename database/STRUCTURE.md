@@ -104,3 +104,53 @@ MongoDB의 Collection에 해당하는 구조를 이 문서에 기록하도록 �
     }
 }
 ```
+
+## 3. User Schema 정의
+
+**User**의 경우 User **`[유저]`** 생성 시 유저를 정의하는 Schema 이다.
+
+```js
+{
+  /**
+   * User UUID
+   */
+  _id: {
+    type: String,
+    required: true,
+  },
+
+  /**
+   * User nickname
+   */
+  nickname: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+
+  /**
+   * User profile image
+   */
+  profileImg: {
+    type: String,
+    default: "",
+  },
+
+  /**
+   * User role: admin
+   */
+  role: {
+    type: String,
+    required: true,
+  },
+
+  /**
+   * User introduction (about User)
+   */
+  introduction: {
+    type: String,
+    required: true,
+    default: "Introduce myself",
+  },
+};
+```
