@@ -1,15 +1,14 @@
 import { v4 as uuid4 } from "uuid";
 import ArticleModel from "../schema/article.schema";
+// import UserModel from "../schema/user.schema";
+import TagModel from "../schema/tag.schema";
 import APIErrorHandler from "../helpers/error.helper";
 
 const articleService = {};
 
 articleService.getAllArticleRequest = async function () {
   try {
-    const articles = await ArticleModel.find({})
-      .populate("tags")
-      .populate("wrtiers")
-      .exec();
+    const articles = await ArticleModel.find({}).exec();
     if (!articles.length) return [];
     return articles;
   } catch (error) {
@@ -38,6 +37,7 @@ articleService.createArticleRequest = async function (
       contents: contents,
       path: path,
     }).exec();
+
     if (foundArticle) {
       const error = new APIErrorHandler(
         "Failed: We already have an article with exact same contents!",
@@ -45,16 +45,16 @@ articleService.createArticleRequest = async function (
       );
       return { error: error };
     }
+
     const createdArticle = await ArticleModel.create({
       _id: uuid4(),
       thumbnail: thumbnail,
       title: title,
       subtitle: subtitle,
       contents: contents,
-      tags: tags,
-      writers: writers,
       path: path,
     });
+
     return createdArticle;
   } catch (error) {
     const apiError = new APIErrorHandler(

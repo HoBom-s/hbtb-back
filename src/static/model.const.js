@@ -1,6 +1,8 @@
 /**
  * Static 상수 집합
  *
+ * User
+ *
  * Article
  *
  * Tag
@@ -9,6 +11,8 @@
  * Category
  * [ GET, UPDATE, DELETE ]
  */
+
+const STATIC_USER = "user";
 
 const STATIC_ARTICLE = "article";
 
@@ -21,6 +25,7 @@ const STATIC_CATEGORY_UPDATE = "categoryUpdate";
 const STATIC_CATEGORY_DELETE = "categoryDelete";
 
 export {
+  STATIC_USER,
   STATIC_ARTICLE,
   STATIC_TAG,
   STATIC_TAG_UPDATE,

@@ -105,4 +105,4 @@ const ArticleSchema = new Schema(
 );
 
 const ArticleModel = mongoose.model("Article", ArticleSchema);
-export { ArticleSchema, ArticleModel };
+export default ArticleModel;
