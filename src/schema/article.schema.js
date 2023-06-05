@@ -71,6 +71,11 @@ const ArticleSchema = new Schema(
       of: UserSchema,
     },
 
+    path: {
+      type: String,
+      required: true,
+    },
+
     /**
      * Article first create date
      */
