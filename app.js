@@ -6,6 +6,7 @@ import initializeDataBase from "./database";
 import tagRouter from "./src/routes/tag.router";
 import categoryRouter from "./src/routes/category.router";
 import errorMiddleware from "./src/middlewares/error.middleware";
+import articleRouter from "./src/routes/article.router";
 import { swaggerUi, specs } from "./docs";
 
 dotenv.config();
@@ -25,6 +26,7 @@ app.use(
 
 app.use("/tag", tagRouter);
 app.use("/category", categoryRouter);
+app.use("/article", articleRouter);
 
 app.use(
   "/api-docs",

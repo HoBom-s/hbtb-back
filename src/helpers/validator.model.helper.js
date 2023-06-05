@@ -9,8 +9,12 @@ import APIErrorHandler from "./error.helper";
 const validatorModelHelper = {
   // Article Create
   article: {
+    thumbnail: Joi.string().required(),
     title: Joi.string().required(),
-    subTitle: Joi.string().required(),
+    subtitle: Joi.string().required(),
+    contents: Joi.string().required(),
+    tags: Joi.array().required(),
+    writer: Joi.array().required(),
   },
 
   // Tag Create
