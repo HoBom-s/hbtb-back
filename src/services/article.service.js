@@ -1,8 +1,9 @@
 import { v4 as uuid4 } from "uuid";
 import ArticleModel from "../schema/article.schema";
-import TagModel from "../schema/tag.schema";
-import UserModel from "../schema/user.schema";
 import APIErrorHandler from "../helpers/error.helper";
+import tagService from "./tag.service";
+import userService from "./user.service";
+import TagModel from "../schema/tag.schema";
 
 const articleService = {};
 
@@ -46,13 +47,27 @@ articleService.createArticleRequest = async function (
       return { error: error };
     }
 
-    // tags TagModel 저장
-    // const createdTags = await TagModel.create({
-    //   _id: uuid4(),
-    //   title:
-    // })
+    // tags: Tag Collection 저장
+    await Promise.all(
+      tags.map(async (tag) => {
+        const foundTag = await TagModel.findOne({
+          title: tag.title,
+          path: tag.path,
+        }).exec();
+        if (foundTag) {
+          const error = new APIErrorHandler(
+            "Failed: The tag already exist!",
+            400
+          );
+          return { error: error };
+        }
+        return tagService.createTagRequest(tag.title, tag.path);
+      })
+    );
 
-    // writer UserModel 저장
+    // writers: UserModel 저장
+    // userService;
+
     // const createdUser = await UserModel.create({})
 
     const createdArticle = await ArticleModel.create({
