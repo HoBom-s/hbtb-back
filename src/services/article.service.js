@@ -1,7 +1,7 @@
 import { v4 as uuid4 } from "uuid";
 import ArticleModel from "../schema/article.schema";
-// import UserModel from "../schema/user.schema";
 import TagModel from "../schema/tag.schema";
+import UserModel from "../schema/user.schema";
 import APIErrorHandler from "../helpers/error.helper";
 
 const articleService = {};
@@ -40,11 +40,20 @@ articleService.createArticleRequest = async function (
 
     if (foundArticle) {
       const error = new APIErrorHandler(
-        "Failed: We already have an article with exact same contents!",
+        "Failed: We already have an article with exact same contents and path!",
         400
       );
       return { error: error };
     }
+
+    // tags TagModel 저장
+    // const createdTags = await TagModel.create({
+    //   _id: uuid4(),
+    //   title:
+    // })
+
+    // writer UserModel 저장
+    // const createdUser = await UserModel.create({})
 
     const createdArticle = await ArticleModel.create({
       _id: uuid4(),
@@ -52,6 +61,8 @@ articleService.createArticleRequest = async function (
       title: title,
       subtitle: subtitle,
       contents: contents,
+      tags: tags,
+      writers: writers,
       path: path,
     });
 

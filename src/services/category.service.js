@@ -1,5 +1,6 @@
 import { v4 as uuid4 } from "uuid";
 import CategoryModel from "../schema/category.schema";
+import PaginatorHelper from "../helpers/paginator.helper";
 import APIErrorHandler from "../helpers/error.helper";
 
 /**
@@ -10,11 +11,18 @@ const categoryService = {};
 
 categoryService.getAllCategoryRequest = async function () {
   try {
-    const categories = await CategoryModel.find({}, null, {
-      sort: {
-        sortIndex: 1,
-      },
-    }).exec();
+    // const categories = await CategoryModel.find({}, null, {
+    //   sort: {
+    //     sortIndex: 1,
+    //   },
+    // }).exec();
+    const paginatorHelper = new PaginatorHelper(10, CategoryModel);
+    const categories = await paginatorHelper.getDocumentsPerPage(1, {
+      whereTarget: "",
+      whereCondition: "",
+      sortTarget: "sortIndex",
+      sortCondition: 1,
+    });
     if (!categories.length) return [];
     return categories;
   } catch (error) {
