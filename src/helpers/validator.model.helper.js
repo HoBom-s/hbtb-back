@@ -26,6 +26,17 @@ const validatorModelHelper = {
     path: Joi.string().required(),
   },
 
+  //Article Update
+  articleUpdate: {
+    thumbnail: Joi.string().required(),
+    title: Joi.string().required(),
+    subtitle: Joi.string().required(),
+    contents: Joi.string().required(),
+    tags: Joi.array().required(),
+    writers: Joi.array().required(),
+    path: Joi.string().required(),
+  },
+
   // Tag Create
   tag: {
     title: Joi.string().required(),

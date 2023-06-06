@@ -93,31 +93,35 @@ articleService.createArticleRequest = async function (
   return createdArticle;
 };
 
-// articleService.updateArticleRequest = async function (
-//   _id,
-//   thumbnail,
-//   title,
-//   subtitle,
-//   contents,
-//   tags,
-//   writers,
-//   path
-// ) {
-//   const updatedArticle = await ArticleModel.updateOne(
-//     {
-//       _id: _id,
-//     },
-//     {
-//       thumbnail,
-//       title,
-//       subtitle,
-//       contents,
-//       tags,
-//       writers: writers,
-//       path: path,
-//     }
-//   );
-// };
+articleService.updateArticleRequest = async function (
+  _id,
+  thumbnail,
+  title,
+  subtitle,
+  contents,
+  tags,
+  writers,
+  path
+) {
+  const updatedTags = await this.tagControl(tags);
+  const updatedWriters = await this.writerControl(writers);
+  const updatedArticle = await ArticleModel.findByIdAndUpdate(
+    _id,
+    {
+      thumbnail,
+      title,
+      subtitle,
+      contents,
+      tags: updatedTags,
+      writers: updatedWriters,
+      path,
+    },
+    {
+      new: true,
+    }
+  );
+  return updatedArticle;
+};
 
 Object.freeze(articleService);
 export default articleService;

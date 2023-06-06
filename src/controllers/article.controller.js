@@ -30,4 +30,24 @@ articleController.createArticleRequest = async function (req, res, next) {
   }
 };
 
+articleController.updateArticleRequest = async function (req, res, next) {
+  try {
+    const { _id } = req.params;
+    const { thumbnail, title, subtitle, contents, tags, writers, path } =
+      req.body;
+    const updatedArticle = await articleService.updateArticleRequest(
+      _id,
+      thumbnail,
+      title,
+      subtitle,
+      contents,
+      tags,
+      writers,
+      path
+    );
+    return res.status(200).send(updatedArticle);
+  } catch (error) {
+    next(error);
+  }
+};
 export default articleController;
