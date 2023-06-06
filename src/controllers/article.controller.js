@@ -3,23 +3,16 @@ import APIErrorHandler from "../helpers/error.helper";
 
 const articleController = {};
 
-articleController.getAllArticleRequest = async function (req, res) {
+articleController.getAllArticleRequest = async function (req, res, next) {
   try {
     const articles = await articleService.getAllArticleRequest();
     return res.status(200).send(articles);
   } catch (error) {
-    const apiError = new APIErrorHandler(
-      `Get all articles request controller failed with ${error.message}`,
-      error.status
-    );
-    const { status, msg } = apiError;
-    res.status(status).send({
-      message: msg,
-    });
+    next(error);
   }
 };
 
-articleController.createArticleRequest = async function (req, res) {
+articleController.createArticleRequest = async function (req, res, next) {
   try {
     const { thumbnail, title, subtitle, contents, tags, writers, path } =
       req.body;
@@ -34,14 +27,7 @@ articleController.createArticleRequest = async function (req, res) {
     );
     return res.status(200).send(createdArticle);
   } catch (error) {
-    const apiError = new APIErrorHandler(
-      `Create article request controller failed with ${error.message}`,
-      error.status
-    );
-    const { status, msg } = apiError;
-    res.status(status).send({
-      message: msg,
-    });
+    next(error);
   }
 };
 

@@ -61,4 +61,5 @@ const TagSchema = new Schema(
 );
 
 const TagModel = mongoose.model("Tag", TagSchema);
+
 export default TagModel;

@@ -1,5 +1,5 @@
 import { v4 as uuid4 } from "uuid";
-import { TagModel } from "../schema/tag.schema";
+import TagModel from "../schema/tag.schema";
 import APIErrorHandler from "../helpers/error.helper";
 
 /**
@@ -7,6 +7,25 @@ import APIErrorHandler from "../helpers/error.helper";
  * Business logic of tag
  */
 const tagService = {};
+
+tagService.getOneTagRequest = async function (title) {
+  try {
+    const foundTag = await TagModel.findOne({
+      title: title,
+    }).exec();
+    if (!foundTag) return "Cannot find the tag!";
+    return foundTag;
+  } catch (error) {
+    const apiError = new APIErrorHandler(
+      `Get one tag request service failed with ${error.message}`,
+      error.status
+    );
+    const { status, msg } = apiError;
+    throw new Error(
+      `The get one tag request service error with ${status}! ${msg}`
+    );
+  }
+};
 
 tagService.getAllTagRequest = async function () {
   try {
@@ -26,30 +45,21 @@ tagService.getAllTagRequest = async function () {
 };
 
 tagService.createTagRequest = async function (title, path) {
-  try {
-    const found = await TagModel.findOne({ title: title }).exec();
-    if (found) {
-      const error = new APIErrorHandler(`The ${title} Tag already exist!`, 400);
-      return {
-        error: error,
-      };
-    }
-    const createdTag = await TagModel.create({
-      _id: uuid4(),
-      title: title,
-      path: path,
-      count: 0,
-      createdAt: new Date(),
-    });
-    return createdTag;
-  } catch (error) {
-    const apiError = new APIErrorHandler(
-      `Create tag request fail! with ${error.message}`,
-      500
-    );
-    const { status, msg } = apiError;
-    throw new Error(`The create tag service error with ${status}! ${msg}`);
+  const found = await TagModel.findOne({ title: title }).exec();
+  if (found) {
+    const error = new APIErrorHandler(`The ${title} Tag already exist!`, 400);
+    return {
+      error: error,
+    };
   }
+  const createdTag = await TagModel.create({
+    _id: uuid4(),
+    title: title,
+    path: path,
+    count: 0,
+    createdAt: new Date(),
+  });
+  return createdTag;
 };
 
 tagService.updateTagRequest = async function (_id, title, path, count) {

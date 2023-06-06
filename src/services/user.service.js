@@ -4,6 +4,25 @@ import UserModel from "../schema/user.schema";
 
 const userService = {};
 
+userService.findOneUserRequest = async function (nickname, role) {
+  try {
+    const foundUser = await UserModel.findOne({
+      nickname: nickname,
+      role: role,
+    });
+    if (!foundUser) return "Cannot find the user!";
+    return foundUser;
+  } catch (error) {
+    const apiError = new APIErrorHandler(
+      `Failed: Find one user service request failed! with ${error.message}`
+    );
+    const { status, msg } = apiError;
+    throw new Error(
+      `Failed: Find one user service error with ${status}! ${msg}`
+    );
+  }
+};
+
 userService.createUserRequest = async function (
   nickname,
   profileImg,
@@ -11,10 +30,7 @@ userService.createUserRequest = async function (
   introduction
 ) {
   try {
-    const foundUser = await UserModel.findOne({
-      nickname: nickname,
-      role: role,
-    });
+    const foundUser = this.findOneUserRequest(nickname, role);
     if (foundUser) {
       const error = new APIErrorHandler("Failed: Already have the user!", 400);
       return { error: error };

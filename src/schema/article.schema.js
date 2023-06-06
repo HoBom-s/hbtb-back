@@ -39,7 +39,7 @@ const ArticleSchema = new Schema(
     /**
      * Article Sub Title (Description under each title)
      */
-    subTitle: {
+    subtitle: {
       type: String,
       required: true,
       trim: true,
@@ -60,7 +60,7 @@ const ArticleSchema = new Schema(
      */
     tags: [
       {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: TagModel,
       },
     ],
@@ -70,7 +70,7 @@ const ArticleSchema = new Schema(
      */
     writers: [
       {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: UserModel,
       },
     ],
@@ -98,7 +98,7 @@ const ArticleSchema = new Schema(
     updatedAt: {
       type: Date,
       required: false,
-      default: "",
+      default: new Date(),
     },
   },
   { versionKey: false }
