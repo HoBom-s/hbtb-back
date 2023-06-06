@@ -6,6 +6,49 @@ import UserModel from "../schema/user.schema";
 
 const articleService = {};
 
+/**
+ * Article 내의 tags 다루기
+ * 이미 tag collection에 존재하는 태그라면 _id값만 저장
+ * 새로운 태그라면 tag collection에 저장하고, _id값 저장
+ */
+articleService.tagControl = async function (tags) {
+  const theArticleTags = [];
+  const tagPromises = tags.map(async (tag) => {
+    const foundTag = await TagModel.findOne({
+      title: tag.title,
+      path: tag.path,
+    });
+    if (!foundTag) {
+      const createdTag = await tagService.createTagRequest(tag.title, tag.path);
+      theArticleTags.push(createdTag._id);
+      return;
+    }
+    theArticleTags.push(foundTag._id);
+    return;
+  });
+
+  await Promise.all(tagPromises);
+  return theArticleTags;
+};
+
+/**
+ * Article writers 저장
+ * 기존의 user 중 writer를 찾아 _id값 저장
+ */
+articleService.writerControl = async function (writers) {
+  const theArticleWriters = [];
+  const userPromises = writers.map(async (writer) => {
+    const foundUser = await UserModel.findOne({
+      nickname: writer,
+    });
+    if (foundUser) theArticleWriters.push(foundUser._id);
+    return;
+  });
+
+  await Promise.all(userPromises);
+  return theArticleWriters;
+};
+
 articleService.getAllArticleRequest = async function () {
   const articles = await ArticleModel.find({})
     .populate("tags")
@@ -32,46 +75,10 @@ articleService.createArticleRequest = async function (
   if (foundArticle)
     return "Failed: We already have an article with exact same contents and path!";
 
-  /**
-   * Tags
-   * 이미 tag collection에 존재하는 태그라면 _id값만 저장
-   * 새로운 태그라면 tag collection에 저장하고, _id값 저장
-   */
+  const theArticleTags = await this.tagControl(tags);
 
-  const theArticleTags = [];
-  const tagPromises = tags.map(async (tag) => {
-    const foundTag = await TagModel.findOne({
-      title: tag.title,
-      path: tag.path,
-    });
-    if (!foundTag) {
-      const createdTag = await tagService.createTagRequest(tag.title, tag.path);
-      theArticleTags.push(createdTag._id);
-      return;
-    }
-    theArticleTags.push(foundTag._id);
-    return;
-  });
+  const theArticleWriters = await this.writerControl(writers);
 
-  await Promise.all(tagPromises);
-
-  /**
-   * User(writer) 저장
-   */
-  const theArticleWriters = [];
-  const userPromises = writers.map(async (writer) => {
-    const foundUser = await UserModel.findOne({
-      nickname: writer,
-    });
-    if (foundUser) theArticleWriters.push(foundUser._id);
-    return;
-  });
-
-  await Promise.all(userPromises);
-
-  /**
-   * 해당하는 tag와 writer(user) 기입하여 Article 생성
-   */
   const createdArticle = await ArticleModel.create({
     _id: uuid4(),
     thumbnail: thumbnail,
@@ -85,6 +92,32 @@ articleService.createArticleRequest = async function (
 
   return createdArticle;
 };
+
+// articleService.updateArticleRequest = async function (
+//   _id,
+//   thumbnail,
+//   title,
+//   subtitle,
+//   contents,
+//   tags,
+//   writers,
+//   path
+// ) {
+//   const updatedArticle = await ArticleModel.updateOne(
+//     {
+//       _id: _id,
+//     },
+//     {
+//       thumbnail,
+//       title,
+//       subtitle,
+//       contents,
+//       tags,
+//       writers: writers,
+//       path: path,
+//     }
+//   );
+// };
 
 Object.freeze(articleService);
 export default articleService;
