@@ -7,7 +7,10 @@ import UserModel from "../schema/user.schema";
 const articleService = {};
 
 articleService.getAllArticleRequest = async function () {
-  const articles = await ArticleModel.find({}).exec();
+  const articles = await ArticleModel.find({})
+    .populate("tags")
+    .populate("writers")
+    .exec();
   if (!articles.length) return [];
   return articles;
 };

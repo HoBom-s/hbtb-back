@@ -1,5 +1,4 @@
 import articleService from "../services/article.service";
-import APIErrorHandler from "../helpers/error.helper";
 
 const articleController = {};
 
