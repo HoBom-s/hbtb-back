@@ -123,5 +123,12 @@ articleService.updateArticleRequest = async function (
   return updatedArticle;
 };
 
+articleService.deleteArticleRequest = async function (_id) {
+  const { deletedCount } = ArticleModel.deleteOne({ _id });
+  if (!deletedCount)
+    return `Article not found. Deleted count: ${deletedCount}!`;
+  return deletedCount;
+};
+
 Object.freeze(articleService);
 export default articleService;

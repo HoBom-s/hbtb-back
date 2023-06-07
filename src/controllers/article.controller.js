@@ -50,4 +50,15 @@ articleController.updateArticleRequest = async function (req, res, next) {
     next(error);
   }
 };
+
+articleController.deleteArticleRequest = async function (req, res, next) {
+  try {
+    const { _id } = req.params;
+    const deletedCount = await articleService.deleteArticleRequest(_id);
+    return res.status(200).send(deletedCount);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export default articleController;

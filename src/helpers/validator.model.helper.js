@@ -37,6 +37,11 @@ const validatorModelHelper = {
     path: Joi.string().required(),
   },
 
+  //Article Delete
+  articleDelete: {
+    _id: Joi.string().required(),
+  },
+
   // Tag Create
   tag: {
     title: Joi.string().required(),

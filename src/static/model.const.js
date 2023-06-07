@@ -16,6 +16,7 @@ const STATIC_USER = "user";
 
 const STATIC_ARTICLE = "article";
 const STATIC_ARTICLE_UPDATE = "articleUpdate";
+const STATIC_ARTICLE_DELETE = "articleDelete";
 
 const STATIC_TAG = "tag";
 const STATIC_TAG_UPDATE = "tagUpdate";
@@ -29,6 +30,7 @@ export {
   STATIC_USER,
   STATIC_ARTICLE,
   STATIC_ARTICLE_UPDATE,
+  STATIC_ARTICLE_DELETE,
   STATIC_TAG,
   STATIC_TAG_UPDATE,
   STATIC_TAG_DELETE,
