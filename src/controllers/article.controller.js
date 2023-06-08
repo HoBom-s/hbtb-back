@@ -54,8 +54,8 @@ articleController.updateArticleRequest = async function (req, res, next) {
 articleController.deleteArticleRequest = async function (req, res, next) {
   try {
     const { _id } = req.params;
-    const deletedCount = await articleService.deleteArticleRequest(_id);
-    return res.status(200).send(deletedCount);
+    await articleService.deleteArticleRequest(_id);
+    return res.status(200).send("Successfully DELETED the article!");
   } catch (error) {
     next(error);
   }

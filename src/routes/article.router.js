@@ -1,5 +1,6 @@
 import express from "express";
 import bodyValidation from "../middlewares/body.middleware";
+import paramValidation from "../middlewares/parameter.middleware";
 import {
   STATIC_ARTICLE,
   STATIC_ARTICLE_UPDATE,
@@ -17,15 +18,16 @@ router.post(
   articleController.createArticleRequest
 );
 
-router.put(
+router.patch(
   "/update/:_id",
+  paramValidation(STATIC_ARTICLE_DELETE),
   bodyValidation(STATIC_ARTICLE_UPDATE),
   articleController.updateArticleRequest
 );
 
 router.delete(
   "/delete/:_id",
-  bodyValidation(STATIC_ARTICLE_DELETE),
+  paramValidation(STATIC_ARTICLE_DELETE),
   articleController.deleteArticleRequest
 );
 

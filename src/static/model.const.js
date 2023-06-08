@@ -4,6 +4,7 @@
  * User
  *
  * Article
+ * [GET, UPDATE, DELETE]
  *
  * Tag
  * [ GET, UPDATE, DELETE ]
