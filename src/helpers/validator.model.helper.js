@@ -7,10 +7,39 @@ import APIErrorHandler from "./error.helper";
  * 사용자로부터 넘어온 Request body 값을 검증하기 위한 모델 Object
  */
 const validatorModelHelper = {
+  // User Create
+  user: {
+    nickname: Joi.string().required(),
+    profileImg: Joi.string().required(),
+    role: Joi.string().required(),
+    introduction: Joi.string().required(),
+  },
+
   // Article Create
   article: {
+    thumbnail: Joi.string().required(),
     title: Joi.string().required(),
-    subTitle: Joi.string().required(),
+    subtitle: Joi.string().required(),
+    contents: Joi.string().required(),
+    tags: Joi.array().required(),
+    writers: Joi.array().required(),
+    path: Joi.string().required(),
+  },
+
+  //Article Update
+  articleUpdate: {
+    thumbnail: Joi.string().required(),
+    title: Joi.string().required(),
+    subtitle: Joi.string().required(),
+    contents: Joi.string().required(),
+    tags: Joi.array().required(),
+    writers: Joi.array().required(),
+    path: Joi.string().required(),
+  },
+
+  //Article Delete
+  articleDelete: {
+    _id: Joi.string().required(),
   },
 
   // Tag Create

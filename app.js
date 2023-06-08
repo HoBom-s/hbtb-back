@@ -6,6 +6,8 @@ import initializeDataBase from "./database";
 import tagRouter from "./src/routes/tag.router";
 import categoryRouter from "./src/routes/category.router";
 import errorMiddleware from "./src/middlewares/error.middleware";
+import articleRouter from "./src/routes/article.router";
+import userRouter from "./src/routes/user.router";
 import { swaggerUi, specs } from "./docs";
 
 dotenv.config();
@@ -15,6 +17,7 @@ initializeDataBase();
 const app = express();
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(helmet());
 app.use(
   cors({
@@ -25,6 +28,8 @@ app.use(
 
 app.use("/tag", tagRouter);
 app.use("/category", categoryRouter);
+app.use("/article", articleRouter);
+app.use("/user", userRouter);
 
 app.use(
   "/api-docs",
