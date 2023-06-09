@@ -3,6 +3,7 @@ import ArticleModel from "../schema/article.schema";
 import tagService from "./tag.service";
 import TagModel from "../schema/tag.schema";
 import UserModel from "../schema/user.schema";
+import utilFunc from "../utils/func";
 
 const articleService = {};
 
@@ -11,9 +12,12 @@ const articleService = {};
  * 이미 tag collection에 존재하는 태그라면 _id값만 저장
  * 새로운 태그라면 tag collection에 저장하고, _id값 저장
  */
+
+// asyncForEach 함수로 반복문 돌리기
 articleService.tagControl = async function (tags) {
   const theArticleTags = [];
-  const tagPromises = tags.map(async (tag) => {
+
+  utilFunc.asyncForEach(tags, async (tag) => {
     const foundTag = await TagModel.findOne({
       title: tag.title,
       path: tag.path,
@@ -21,13 +25,10 @@ articleService.tagControl = async function (tags) {
     if (!foundTag) {
       const createdTag = await tagService.createTagRequest(tag.title, tag.path);
       theArticleTags.push(createdTag._id);
-      return;
     }
     theArticleTags.push(foundTag._id);
-    return;
   });
 
-  await Promise.all(tagPromises);
   return theArticleTags;
 };
 
@@ -37,15 +38,14 @@ articleService.tagControl = async function (tags) {
  */
 articleService.writerControl = async function (writers) {
   const theArticleWriters = [];
-  const userPromises = writers.map(async (writer) => {
+
+  utilFunc.asyncForEach(writers, async (writer) => {
     const foundUser = await UserModel.findOne({
       nickname: writer,
     });
     if (foundUser) theArticleWriters.push(foundUser._id);
-    return;
   });
 
-  await Promise.all(userPromises);
   return theArticleWriters;
 };
 
@@ -76,7 +76,6 @@ articleService.createArticleRequest = async function (
     return "Failed: We already have an article with exact same contents and path!";
 
   const theArticleTags = await this.tagControl(tags);
-
   const theArticleWriters = await this.writerControl(writers);
 
   const createdArticle = await ArticleModel.create({
