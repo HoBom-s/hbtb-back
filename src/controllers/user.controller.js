@@ -1,4 +1,3 @@
-import APIErrorHandler from "../helpers/error.helper";
 import userService from "../services/user.service";
 
 const userController = {};

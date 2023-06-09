@@ -2,9 +2,10 @@
  * Static 상수 집합
  *
  * User
+ * [ GET ]
  *
  * Article
- * [GET, UPDATE, DELETE]
+ * [ GET, UPDATE, DELETE ]
  *
  * Tag
  * [ GET, UPDATE, DELETE ]
