@@ -75,8 +75,11 @@ articleService.createArticleRequest = async function (
   if (foundArticle)
     return "Failed: We already have an article with exact same contents and path!";
 
-  const theArticleTags = await this.tagControl(tags);
-  const theArticleWriters = await this.writerControl(writers);
+  // invokeAll로 한번에 실행 시키기
+  const res = await utilFunc.invokeAll(
+    this.tagControl(tags),
+    this.writerControl(writers)
+  );
 
   const createdArticle = await ArticleModel.create({
     _id: uuid4(),
@@ -84,8 +87,8 @@ articleService.createArticleRequest = async function (
     title: title,
     subtitle: subtitle,
     contents: contents,
-    tags: theArticleTags,
-    writers: theArticleWriters,
+    tags: res[0],
+    writers: res[1],
     path: path,
   });
 

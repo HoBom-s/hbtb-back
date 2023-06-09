@@ -16,14 +16,20 @@ const utilFunc = {
     return arr1.filter((v, idx) => arr2.indexOf(v) === idx);
   },
 
-  // asyncForEach: (arr, cb) => {
-  //   for (const el of arr) {
-  //     return cb(el);
-  //   }
-  // },
+  //Function
+  asyncForEach: async (arr, cb) => {
+    for (const el of arr) {
+      await cb(el);
+    }
+  },
 
-  asyncForEach: (arr, cb) => {
-    Array.from({ length: arr.length }, (v, idx) => idx);
+  // funcs는 함수들의 array
+  invokeAll: async (funcs) => {
+    const arr = Array.from({ length: funcs.length }, (v, idx) => idx);
+    for (let i = 0; i < arr.length; i++) {
+      arr[i] = funcs[i];
+    }
+    return arr;
   },
 };
 
