@@ -14,12 +14,7 @@ userController.createUserRequest = async function (req, res) {
     );
     return res.status(200).send(createdUser);
   } catch (error) {
-    const apiError = new APIErrorHandler(
-      `Create user request controller failed with ${error.message}`,
-      error.status
-    );
-    const { status, msg } = apiError;
-    res.status(status).send({ message: msg });
+    next(error);
   }
 };
 
