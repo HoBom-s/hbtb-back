@@ -72,14 +72,12 @@ articleService.createArticleRequest = async function (
     path: path,
   }).exec();
 
-  if (foundArticle)
-    return "Failed: We already have an article with exact same contents and path!";
+  if (foundArticle) throw new Error("Article not found!");
 
-  // invokeAll로 한번에 실행 시키기
-  const res = await utilFunc.invokeAll(
+  const res = await utilFunc.invokeAll([
     this.tagControl(tags),
-    this.writerControl(writers)
-  );
+    this.writerControl(writers),
+  ]);
 
   const createdArticle = await ArticleModel.create({
     _id: uuid4(),
@@ -105,8 +103,11 @@ articleService.updateArticleRequest = async function (
   writers,
   path
 ) {
-  const updatedTags = await this.tagControl(tags);
-  const updatedWriters = await this.writerControl(writers);
+  const res = await utilFunc.invokeAll([
+    this.tagControl(tags),
+    this.writerControl(writers),
+  ]);
+
   const updatedArticle = await ArticleModel.findByIdAndUpdate(
     _id,
     {
@@ -114,8 +115,8 @@ articleService.updateArticleRequest = async function (
       title,
       subtitle,
       contents,
-      tags: updatedTags,
-      writers: updatedWriters,
+      tags: res[0],
+      writers: res[1],
       path,
     },
     {

@@ -10,7 +10,7 @@ userService.findOneUserRequest = async function (nickname, role) {
     nickname: nickname,
     role: role,
   });
-  if (!foundUser) throw new Error("Cannot find the user!");
+  if (!foundUser) throw new Error("User not found!");
   return foundUser;
 };
 
