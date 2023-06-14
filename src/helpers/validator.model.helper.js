@@ -14,6 +14,17 @@ const validatorModelHelper = {
     role: Joi.string().required(),
     introduction: Joi.string().required(),
   },
+  // User Update
+  userUpdate: {
+    nickname: Joi.string().required(),
+    profileImg: Joi.string().required(),
+    role: Joi.string().required(),
+    introduction: Joi.string().required(),
+  },
+  // User Delete
+  userDelete: {
+    _id: Joi.string().required(),
+  },
 
   // Article Create
   article: {

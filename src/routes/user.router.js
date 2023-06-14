@@ -1,6 +1,11 @@
 import express from "express";
 import bodyValidation from "../middlewares/body.middleware";
-import { STATIC_USER } from "../static/model.const";
+import paramValidation from "../middlewares/parameter.middleware";
+import {
+  STATIC_USER,
+  STATIC_USER_UPDATE,
+  STATIC_USER_DELETE,
+} from "../static/model.const";
 import userController from "../controllers/user.controller";
 
 const router = express.Router();
@@ -11,6 +16,11 @@ router.post(
   userController.createUserRequest
 );
 
-router.patch("/update/:_id", userController.updateUserRequest);
+router.patch(
+  "/update/:_id",
+  paramValidation(STATIC_USER_DELETE),
+  bodyValidation(STATIC_USER_UPDATE),
+  userController.updateUserRequest
+);
 
 export default router;
