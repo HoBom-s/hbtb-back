@@ -5,7 +5,7 @@
  *
  * @param {Error} error
  */
-function errorMiddleware(error, req, res) {
+function errorMiddleware(error, req, res, next) {
   const bodyData = req.body;
   const { status, message } = error;
   if (status >= 400 && status < 500) {

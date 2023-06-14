@@ -2,7 +2,7 @@ import userService from "../services/user.service";
 
 const userController = {};
 
-userController.createUserRequest = async function (req, res, error) {
+userController.createUserRequest = async function (req, res, next) {
   try {
     const { nickname, profileImg, role, introduction } = req.body;
     const createdUser = await userService.createUserRequest(
@@ -17,16 +17,14 @@ userController.createUserRequest = async function (req, res, error) {
   }
 };
 
-userController.updateUserRequest = async function (req, res, error) {
+userController.updateUserRequest = async function (req, res, next) {
   try {
     const { _id } = req.params;
     const updates = ["nickname", "profileImg", "role", "introduction"];
-    let toUpdate = {};
+    const toUpdate = {};
 
     updates.forEach((update) => {
-      if (req.body[update]) {
-        toUpdate[update] = req.body[update];
-      }
+      req.body[update] && (toUpdate[update] = req.body[update]);
     });
 
     const updatedUser = await userService.updateUserRequest(_id, toUpdate);

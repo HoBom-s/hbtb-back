@@ -11,4 +11,6 @@ router.post(
   userController.createUserRequest
 );
 
+router.patch("/update/:_id", userController.updateUserRequest);
+
 export default router;

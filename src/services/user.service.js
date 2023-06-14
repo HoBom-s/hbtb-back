@@ -33,10 +33,12 @@ userService.createUserRequest = async function (
 
 userService.updateUserRequest = async function (_id, toUpdate) {
   const foundUser = await UserModel.findById(_id);
+
   if (!foundUser) throw new Error("User not found!");
   const updatedUser = await UserModel.findByIdAndUpdate(_id, toUpdate, {
     returnDocument: "after",
   });
+
   return updatedUser;
 };
 

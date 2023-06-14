@@ -17,7 +17,7 @@ const articleService = {};
 articleService.tagControl = async function (tags) {
   const theArticleTags = [];
 
-  utilFunc.asyncForEach(tags, async (tag) => {
+  await utilFunc.asyncForEach(tags, async (tag) => {
     const foundTag = await TagModel.findOne({
       title: tag.title,
       path: tag.path,
@@ -25,10 +25,10 @@ articleService.tagControl = async function (tags) {
     if (!foundTag) {
       const createdTag = await tagService.createTagRequest(tag.title, tag.path);
       theArticleTags.push(createdTag._id);
+    } else {
+      theArticleTags.push(foundTag._id);
     }
-    theArticleTags.push(foundTag._id);
   });
-
   return theArticleTags;
 };
 
@@ -39,7 +39,7 @@ articleService.tagControl = async function (tags) {
 articleService.writerControl = async function (writers) {
   const theArticleWriters = [];
 
-  utilFunc.asyncForEach(writers, async (writer) => {
+  await utilFunc.asyncForEach(writers, async (writer) => {
     const foundUser = await UserModel.findOne({
       nickname: writer,
     });
@@ -74,9 +74,9 @@ articleService.createArticleRequest = async function (
 
   if (foundArticle) throw new Error("Article not found!");
 
-  const res = await utilFunc.invokeAll([
-    this.tagControl(tags),
-    this.writerControl(writers),
+  const res = utilFunc.invokeAll([
+    await this.tagControl(tags),
+    await this.writerControl(writers),
   ]);
 
   const createdArticle = await ArticleModel.create({
@@ -103,9 +103,9 @@ articleService.updateArticleRequest = async function (
   writers,
   path
 ) {
-  const res = await utilFunc.invokeAll([
-    this.tagControl(tags),
-    this.writerControl(writers),
+  const res = utilFunc.invokeAll([
+    await this.tagControl(tags),
+    await this.writerControl(writers),
   ]);
 
   const updatedArticle = await ArticleModel.findByIdAndUpdate(

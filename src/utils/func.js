@@ -24,7 +24,7 @@ const utilFunc = {
   },
 
   // funcs는 함수들의 array
-  invokeAll: async (funcs) => {
+  invokeAll: (funcs) => {
     const arr = Array.from({ length: funcs.length }, (v, idx) => idx);
     for (let i = 0; i < arr.length; i++) {
       arr[i] = funcs[i];
