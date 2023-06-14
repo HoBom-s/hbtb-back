@@ -25,7 +25,6 @@ const validatorModelHelper = {
     writers: Joi.array().required(),
     path: Joi.string().required(),
   },
-
   //Article Update
   articleUpdate: {
     thumbnail: Joi.string().required(),
@@ -36,7 +35,6 @@ const validatorModelHelper = {
     writers: Joi.array().required(),
     path: Joi.string().required(),
   },
-
   //Article Delete
   articleDelete: {
     _id: Joi.string().required(),
@@ -66,7 +64,6 @@ const validatorModelHelper = {
     sortIndex: Joi.number().positive().required(),
     spot: Joi.string().min(1).max(1).required(),
   },
-
   // Category Update
   categoryUpdate: {
     _id: Joi.string().required(),
@@ -75,7 +72,6 @@ const validatorModelHelper = {
     sortIndex: Joi.number().required(),
     spot: Joi.string().min(1).max(1).required(),
   },
-
   // Category Delete
   categoryDelete: {
     _id: Joi.string().required(),
