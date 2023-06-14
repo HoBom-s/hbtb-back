@@ -19,7 +19,7 @@ userService.createUserRequest = async function (
   role,
   introduction
 ) {
-  const foundUser = this.findOneUserRequest(nickname, role);
+  const foundUser = await this.findOneUserRequest(nickname, role);
   if (foundUser) throw new Error("The user already exist!");
   const createdUser = await UserModel.create({
     _id: uuid4(),
@@ -29,6 +29,15 @@ userService.createUserRequest = async function (
     introduction: introduction,
   });
   return createdUser;
+};
+
+userService.updateUserRequest = async function (_id, toUpdate) {
+  const foundUser = await UserModel.findById(_id);
+  if (!foundUser) throw new Error("User not found!");
+  const updatedUser = await UserModel.findByIdAndUpdate(_id, toUpdate, {
+    returnDocument: "after",
+  });
+  return updatedUser;
 };
 
 Object.freeze(userService);
