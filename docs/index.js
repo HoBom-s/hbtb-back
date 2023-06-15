@@ -3,6 +3,7 @@ import swaggerJSDoc from "swagger-jsdoc";
 
 import tagComponents from "./tags";
 import categoryComponents from "./categories";
+import articleComponents from "./articles";
 
 const options = {
   swaggerDefinition: {
@@ -24,6 +25,10 @@ const options = {
       {
         name: "Category",
         description: "카테고리 관련 API",
+      },
+      {
+        name: "Article",
+        description: "아티클 관련 API",
       },
     ],
     paths: {
