@@ -42,5 +42,12 @@ userService.updateUserRequest = async function (_id, toUpdate) {
   return updatedUser;
 };
 
+userService.deleteUserRequest = async function (_id) {
+  const foundUser = await UserModel.findById(_id);
+  if (!foundUser) throw new Error("User not found!");
+  await UserModel.findByIdAndDelete(_id);
+  return;
+};
+
 Object.freeze(userService);
 export default userService;
