@@ -127,6 +127,8 @@ articleService.updateArticleRequest = async function (
 };
 
 articleService.deleteArticleRequest = async function (_id) {
+  const foundArticle = await ArticleModel.findById(_id);
+  if (!foundArticle) throw new Error("Article not found!");
   await ArticleModel.findByIdAndDelete(_id);
   return;
 };
