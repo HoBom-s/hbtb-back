@@ -1,25 +1,17 @@
 import categoryService from "../services/category.service";
-import APIErrorHandler from "../helpers/error.helper";
 
 const categoryController = {};
 
-categoryController.getAllCategoryRequest = async function (req, res) {
+categoryController.getAllCategoryRequest = async function (req, res, next) {
   try {
     const categories = await categoryService.getAllCategoryRequest();
     res.status(200).send(categories);
   } catch (error) {
-    const apiError = new APIErrorHandler(
-      `Get all category request controller fail with ${error.message}`,
-      error.status
-    );
-    const { status, msg } = apiError;
-    res.status(status).send({
-      message: msg,
-    });
+    next(error);
   }
 };
 
-categoryController.createCategoryRequest = async function (req, res) {
+categoryController.createCategoryRequest = async function (req, res, next) {
   try {
     const { title, path, sortIndex, spot } = req.body;
     const validSpot = ["H", "F"];
@@ -37,18 +29,11 @@ categoryController.createCategoryRequest = async function (req, res) {
     );
     res.status(200).send(createdCategory);
   } catch (error) {
-    const apiError = new APIErrorHandler(
-      `Create category request controller fail with ${error.message}`,
-      error.status
-    );
-    const { status, msg } = apiError;
-    res.status(status).send({
-      message: msg,
-    });
+    next(error);
   }
 };
 
-categoryController.updateCategoryRequest = async function (req, res) {
+categoryController.updateCategoryRequest = async function (req, res, next) {
   try {
     const { _id, title, path, sortIndex, spot } = req.body;
     const updatedCategory = await categoryService.updateCategoryRequest(
@@ -65,18 +50,11 @@ categoryController.updateCategoryRequest = async function (req, res) {
     }
     res.status(200).send(updatedCategory);
   } catch (error) {
-    const apiError = new APIErrorHandler(
-      `Update category request controller fail with ${error.message}`,
-      error.status
-    );
-    const { status, msg } = apiError;
-    res.status(status).send({
-      message: msg,
-    });
+    next(error);
   }
 };
 
-categoryController.deleteCategoryRequest = async function (req, res) {
+categoryController.deleteCategoryRequest = async function (req, res, next) {
   try {
     const { _id } = req.params;
     const deletedCategory = await categoryService.deleteCategoryRequest(_id);
@@ -87,14 +65,7 @@ categoryController.deleteCategoryRequest = async function (req, res) {
     }
     res.status(200).send(deletedCategory);
   } catch (error) {
-    const apiError = new APIErrorHandler(
-      `Delete category request controller fail with ${error.message}`,
-      error.status
-    );
-    const { status, msg } = apiError;
-    res.status(status).send({
-      message: msg,
-    });
+    next(error);
   }
 };
 

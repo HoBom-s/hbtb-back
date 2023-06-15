@@ -9,32 +9,29 @@ import APIErrorHandler from "../helpers/error.helper";
  */
 const categoryService = {};
 
+categoryService.getOneCategoryByIdRequest = async function (_id) {
+  const category = await CategoryModel.findOne({
+    _id: _id,
+  });
+  if (!category) return null;
+  return category;
+};
+
 categoryService.getAllCategoryRequest = async function () {
-  try {
-    // const categories = await CategoryModel.find({}, null, {
-    //   sort: {
-    //     sortIndex: 1,
-    //   },
-    // }).exec();
-    const paginatorHelper = new PaginatorHelper(10, CategoryModel);
-    const categories = await paginatorHelper.getDocumentsPerPage(1, {
-      whereTarget: "",
-      whereCondition: "",
-      sortTarget: "sortIndex",
-      sortCondition: 1,
-    });
-    if (!categories.length) return [];
-    return categories;
-  } catch (error) {
-    const apiError = new APIErrorHandler(
-      `Get all category request service fail! with ${error.message}`,
-      error.status
-    );
-    const { status, msg } = apiError;
-    throw new Error(
-      `The get all category request error with ${status}! ${msg}`
-    );
-  }
+  // const categories = await CategoryModel.find({}, null, {
+  //   sort: {
+  //     sortIndex: 1,
+  //   },
+  // }).exec();
+  const paginatorHelper = new PaginatorHelper(10, CategoryModel);
+  const categories = await paginatorHelper.getDocumentsPerPage(1, {
+    whereTarget: "",
+    whereCondition: "",
+    sortTarget: "sortIndex",
+    sortCondition: 1,
+  });
+  if (!categories.length) return [];
+  return categories;
 };
 
 categoryService.createCategoryRequest = async function (
@@ -43,35 +40,19 @@ categoryService.createCategoryRequest = async function (
   sortIndex,
   spot
 ) {
-  try {
-    const found = await CategoryModel.findOne({ title: title }).exec();
-    if (found) {
-      const error = new APIErrorHandler(
-        `The ${title} Category already exist!`,
-        400
-      );
-      return {
-        error: error,
-      };
-    }
-    const createdCategory = await CategoryModel.create({
-      _id: uuid4(),
-      title: title,
-      path: path,
-      sortIndex: sortIndex,
-      spot: spot,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    });
-    return createdCategory;
-  } catch (error) {
-    const apiError = new APIErrorHandler(
-      `Create category request service fail! with ${error.message}`,
-      error.status
-    );
-    const { status, msg } = apiError;
-    throw new Error(`The create category request error with ${status}! ${msg}`);
-  }
+  const found = await CategoryModel.findOne({ title: title }).exec();
+  if (found)
+    throw new APIErrorHandler(`The ${title} Category already exist!`, 400);
+  const createdCategory = await CategoryModel.create({
+    _id: uuid4(),
+    title: title,
+    path: path,
+    sortIndex: sortIndex,
+    spot: spot,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  });
+  return createdCategory;
 };
 
 categoryService.updateCategoryRequest = async function (
@@ -81,58 +62,55 @@ categoryService.updateCategoryRequest = async function (
   sortIndex,
   spot
 ) {
-  try {
-    const updatedInfo = await CategoryModel.updateOne(
-      {
-        _id: _id,
-      },
-      {
-        title: title,
-        path: path,
-        sortIndex: sortIndex,
-        spot: spot,
-      }
-    ).exec();
-    const { acknowledged } = updatedInfo;
-    if (acknowledged) {
-      return {
-        _id: _id,
-        title: title,
-        path: path,
-        sortIndex: sortIndex,
-        spot: spot,
-        updatedAt: new Date(),
-      };
-    }
-    return null;
-  } catch (error) {
-    const apiError = new APIErrorHandler(
-      `Update category request service fail! with ${error.message}`,
-      error.status
+  const found = await this.getOneCategoryByIdRequest(_id);
+  if (!found)
+    throw new APIErrorHandler(
+      `Update category request service fail! with ${_id}`,
+      404
     );
-    const { status, msg } = apiError;
-    throw new Error(`The update category request error with ${status}! ${msg}`);
+  const updatedInfo = await CategoryModel.updateOne(
+    {
+      _id: _id,
+    },
+    {
+      title: title,
+      path: path,
+      sortIndex: sortIndex,
+      spot: spot,
+    }
+  ).exec();
+  const { acknowledged } = updatedInfo;
+  if (acknowledged) {
+    return {
+      _id: _id,
+      title: title,
+      path: path,
+      sortIndex: sortIndex,
+      spot: spot,
+      updatedAt: new Date(),
+    };
+  } else {
+    throw new APIErrorHandler("Update category request service fail!", 404);
   }
 };
 
 categoryService.deleteCategoryRequest = async function (_id) {
-  try {
-    const deleteCategoryInfo = await CategoryModel.deleteOne({
-      _id: _id,
-    }).exec();
-    const { acknowledged } = deleteCategoryInfo;
-    if (!acknowledged) {
-      return null;
-    }
-    return _id;
-  } catch (error) {
-    const apiError = new APIErrorHandler(
-      `Delete category request service fail! with ${error.message}`,
-      error.status
+  const found = await this.getOneCategoryByIdRequest(_id);
+  if (!found)
+    throw new APIErrorHandler(
+      `Delete category request service fail! with ${_id}`,
+      404
     );
-    const { status, msg } = apiError;
-    throw new Error(`The delete category request error with ${status}! ${msg}`);
-  }
+  const deleteCategoryInfo = await CategoryModel.deleteOne({
+    _id: _id,
+  }).exec();
+  const { acknowledged } = deleteCategoryInfo;
+  if (!acknowledged)
+    throw new APIErrorHandler(
+      `Delete category request service fail! with ${_id}`,
+      404
+    );
+  return _id;
 };
 
 Object.freeze(categoryService);
