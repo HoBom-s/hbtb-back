@@ -23,4 +23,10 @@ router.patch(
   userController.updateUserRequest
 );
 
+router.delete(
+  "/delete/:_id",
+  paramValidation(STATIC_USER_DELETE),
+  userController.deleteUserRequest
+);
+
 export default router;
