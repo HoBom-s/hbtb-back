@@ -28,7 +28,7 @@ userService.createUserRequest = async function (
     profileImg: profileImg,
     role: role,
     introduction: introduction,
-  }).exec();
+  });
   return createdUser;
 };
 

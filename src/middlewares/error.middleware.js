@@ -25,9 +25,7 @@ function errorMiddleware(error, req, res, next) {
       message: `${errorStatus}: ${message}`,
     });
   }
-  res.status(status).send({
-    message: `${status}: ${message}`,
-  });
+  next();
 }
 
 export default errorMiddleware;

@@ -1,45 +1,30 @@
 import tagService from "../services/tag.service";
-import APIErrorHandler from "../helpers/error.helper";
 
 /**
  * Tag controller
  */
 const tagController = {};
 
-tagController.getAllTagRequest = async function (req, res) {
+tagController.getAllTagRequest = async function (req, res, next) {
   try {
     const tags = await tagService.getAllTagRequest();
     res.status(200).send(tags);
   } catch (error) {
-    const apiError = new APIErrorHandler(
-      `Get all tag request controller fail with ${error.message}`,
-      error.status
-    );
-    const { status, msg } = apiError;
-    res.status(status).send({
-      message: msg,
-    });
+    next(error);
   }
 };
 
-tagController.createTagRequest = async function (req, res) {
+tagController.createTagRequest = async function (req, res, next) {
   try {
     const { title, path } = req.body;
     const createdTag = await tagService.createTagRequest(title, path);
-    res.status(200).send(createdTag);
+    return res.status(200).send(createdTag);
   } catch (error) {
-    const apiError = new APIErrorHandler(
-      `Create tag request controller fail with ${error.message}`,
-      error.status
-    );
-    const { status, msg } = apiError;
-    res.status(status).send({
-      message: msg,
-    });
+    next(error);
   }
 };
 
-tagController.updateTagReqest = async function (req, res) {
+tagController.updateTagReqest = async function (req, res, next) {
   try {
     const { _id, title, path, count } = req.body;
     const updatedTag = await tagService.updateTagRequest(
@@ -50,18 +35,11 @@ tagController.updateTagReqest = async function (req, res) {
     );
     res.status(200).send(updatedTag);
   } catch (error) {
-    const apiError = new APIErrorHandler(
-      `Update tag request controller fail with ${error.message}`,
-      error.status
-    );
-    const { status, msg } = apiError;
-    res.status(status).send({
-      message: msg,
-    });
+    next(error);
   }
 };
 
-tagController.deleteTagRequest = async function (req, res) {
+tagController.deleteTagRequest = async function (req, res, next) {
   try {
     const { _id } = req.params;
     const deletedTag = await tagService.deleteTagRequest(_id);
@@ -72,14 +50,7 @@ tagController.deleteTagRequest = async function (req, res) {
     }
     res.status(200).send(deletedTag);
   } catch (error) {
-    const apiError = new APIErrorHandler(
-      `Delete tag request controller fail with ${error.message}`,
-      error.status
-    );
-    const { status, msg } = apiError;
-    res.status(status).send({
-      message: msg,
-    });
+    next(error);
   }
 };
 

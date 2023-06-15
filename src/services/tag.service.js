@@ -8,50 +8,23 @@ import APIErrorHandler from "../helpers/error.helper";
  */
 const tagService = {};
 
-tagService.getOneTagRequest = async function (title) {
-  try {
-    const foundTag = await TagModel.findOne({
-      title: title,
-    }).exec();
-    if (!foundTag) return "Cannot find the tag!";
-    return foundTag;
-  } catch (error) {
-    const apiError = new APIErrorHandler(
-      `Get one tag request service failed with ${error.message}`,
-      error.status
-    );
-    const { status, msg } = apiError;
-    throw new Error(
-      `The get one tag request service error with ${status}! ${msg}`
-    );
-  }
+tagService.getOneTagByIdRequest = async function (_id) {
+  const foundTag = await TagModel.findOne({
+    _id: _id,
+  }).exec();
+  if (!foundTag) return null;
+  return foundTag;
 };
 
 tagService.getAllTagRequest = async function () {
-  try {
-    const tags = await TagModel.find({}).exec();
-    if (!tags.length) return [];
-    return tags;
-  } catch (error) {
-    const apiError = new APIErrorHandler(
-      `Get all tag request service fail! with ${error.message}`,
-      error.status
-    );
-    const { status, msg } = apiError;
-    throw new Error(
-      `The get all tag request service error with ${status}! ${msg}`
-    );
-  }
+  const tags = await TagModel.find({}).exec();
+  if (!tags.length) return [];
+  return tags;
 };
 
 tagService.createTagRequest = async function (title, path) {
-  const found = await TagModel.findOne({ title: title }).exec();
-  if (found) {
-    const error = new APIErrorHandler(`The ${title} Tag already exist!`, 400);
-    return {
-      error: error,
-    };
-  }
+  const found = await TagModel.findOne({ title: title, path: path }).exec();
+  if (found) throw new APIErrorHandler(`The ${title} Tag already exist!`, 404);
   const createdTag = await TagModel.create({
     _id: uuid4(),
     title: title,
@@ -63,53 +36,38 @@ tagService.createTagRequest = async function (title, path) {
 };
 
 tagService.updateTagRequest = async function (_id, title, path, count) {
-  try {
-    const updatedTag = await TagModel.updateOne(
-      {
-        _id: _id,
-      },
-      {
-        title: title,
-        path: path,
-        count: count,
-      }
-    ).exec();
-    const { acknowledged } = updatedTag;
-    if (acknowledged) {
-      return {
-        _id: _id,
-        title: title,
-        path: path,
-        count: count,
-      };
+  const updatedTag = await TagModel.updateOne(
+    {
+      _id: _id,
+    },
+    {
+      title: title,
+      path: path,
+      count: count,
     }
-    return null;
-  } catch (error) {
-    const apiError = new APIErrorHandler(
-      `Update tag request fail! with ${error.message}`,
-      500
-    );
-    const { status, msg } = apiError;
-    throw new Error(`The update tag service error with ${status}! ${msg}`);
+  ).exec();
+  const { acknowledged } = updatedTag;
+  if (acknowledged) {
+    return {
+      _id: _id,
+      title: title,
+      path: path,
+      count: count,
+    };
   }
+  return null;
 };
 
 tagService.deleteTagRequest = async function (_id) {
-  try {
-    const deleteTagInfo = await TagModel.deleteOne({ _id: _id }).exec();
-    const { acknowledged } = deleteTagInfo;
-    if (!acknowledged) {
-      return null;
-    }
-    return _id;
-  } catch (error) {
-    const apiError = new APIErrorHandler(
-      `Delete tag request fail! with ${error.message}`,
-      500
-    );
-    const { status, msg } = apiError;
-    throw new Error(`The delete tag service error with ${status}! ${msg}`);
+  const foundTagInfo = await this.getOneTagByIdRequest(_id);
+  if (!foundTagInfo)
+    throw new APIErrorHandler(`Get one tag by id failed with ${_id}`, 404);
+  const deleteTagInfo = await TagModel.deleteOne({ _id: _id }).exec();
+  const { acknowledged } = deleteTagInfo;
+  if (!acknowledged) {
+    return null;
   }
+  return _id;
 };
 
 Object.freeze(tagService);
