@@ -10,13 +10,20 @@ const validatorModelHelper = {
   // User Create
   user: {
     nickname: Joi.string().required(),
+    password: Joi.string().required(),
     profileImg: Joi.string().required(),
     role: Joi.string().required(),
     introduction: Joi.string().required(),
   },
+  // User Login
+  userLogin: {
+    nickname: Joi.string().required(),
+    password: Joi.string().required(),
+  },
   // User Update
   userUpdate: {
     nickname: Joi.string().required(),
+    password: Joi.string().required(),
     profileImg: Joi.string().required(),
     role: Joi.string().required(),
     introduction: Joi.string().required(),
