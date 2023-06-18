@@ -4,14 +4,25 @@ const userController = {};
 
 userController.createUserRequest = async function (req, res, next) {
   try {
-    const { nickname, profileImg, role, introduction } = req.body;
+    const { nickname, password, profileImg, role, introduction } = req.body;
     const createdUser = await userService.createUserRequest(
       nickname,
+      password,
       profileImg,
       role,
       introduction
     );
     return res.status(200).send(createdUser);
+  } catch (error) {
+    next(error);
+  }
+};
+
+userController.loginUserRequest = async function (req, res, next) {
+  try {
+    const { nickname, password } = req.body;
+    const foundUser = await userService.loginUserRequest(nickname, password);
+    return res.status(200).send(foundUser);
   } catch (error) {
     next(error);
   }

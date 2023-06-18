@@ -3,6 +3,7 @@ import bodyValidation from "../middlewares/body.middleware";
 import paramValidation from "../middlewares/parameter.middleware";
 import {
   STATIC_USER,
+  STATIC_USER_LOGIN,
   STATIC_USER_UPDATE,
   STATIC_USER_DELETE,
 } from "../static/model.const";
@@ -14,6 +15,12 @@ router.post(
   "/create",
   bodyValidation(STATIC_USER),
   userController.createUserRequest
+);
+
+router.post(
+  "/login",
+  bodyValidation(STATIC_USER_LOGIN),
+  userController.loginUserRequest
 );
 
 router.patch(
