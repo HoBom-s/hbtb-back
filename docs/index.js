@@ -3,6 +3,8 @@ import swaggerJSDoc from "swagger-jsdoc";
 
 import tagComponents from "./tags";
 import categoryComponents from "./categories";
+import articleComponents from "./articles";
+import userComponents from "./users";
 
 const options = {
   swaggerDefinition: {
@@ -25,6 +27,14 @@ const options = {
         name: "Category",
         description: "카테고리 관련 API",
       },
+      {
+        name: "Article",
+        description: "아티클 관련 API",
+      },
+      {
+        name: "User",
+        description: "유저 관련 API",
+      },
     ],
     paths: {
       "/tag": tagComponents.tagAll,
@@ -35,6 +45,14 @@ const options = {
       "/category/create": categoryComponents.categoryCreate,
       "/category/update": categoryComponents.categoryUpdate,
       "/category/:_id": categoryComponents.categoryDelete,
+      "/article": articleComponents.articleAll,
+      "/article/create": articleComponents.articleCreate,
+      "/article/update": articleComponents.articleUpdate,
+      "/article/delete": articleComponents.articleDelete,
+      "/user": userComponents.userAll,
+      "/user/create": userComponents.userCreate,
+      "/user/update": userComponents.userUpdate,
+      "/user/delete": userComponents.userDelete,
     },
   },
   apis: ["../src/routes/*.js"],
