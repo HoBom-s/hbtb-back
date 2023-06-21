@@ -20,6 +20,15 @@ const UserSchema = new Schema({
   },
 
   /**
+   * User password
+   */
+  password: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+
+  /**
    * User profile image
    */
   profileImg: {

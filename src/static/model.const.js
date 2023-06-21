@@ -2,7 +2,7 @@
  * Static 상수 집합
  *
  * User
- * [ GET, UPDATE, DELETE ]
+ * [ GET, POST(Login), UPDATE, DELETE ]
  *
  * Article
  * [ GET, UPDATE, DELETE ]
@@ -15,6 +15,7 @@
  */
 
 const STATIC_USER = "user";
+const STATIC_USER_LOGIN = "userLogin";
 const STATIC_USER_UPDATE = "userUpdate";
 const STATIC_USER_DELETE = "userDelete";
 
@@ -32,6 +33,7 @@ const STATIC_CATEGORY_DELETE = "categoryDelete";
 
 export {
   STATIC_USER,
+  STATIC_USER_LOGIN,
   STATIC_USER_UPDATE,
   STATIC_USER_DELETE,
   STATIC_ARTICLE,
