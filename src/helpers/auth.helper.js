@@ -1,5 +1,9 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import {
+  ACCESS_TOKEN_EXPIRE_TIME,
+  REFRESH_TOKEN_EXPIRE_TIME,
+} from "../static/static.const";
 
 dotenv.config();
 
@@ -19,7 +23,7 @@ authHelper.createAccessAuthToken = function (_id) {
     },
     process.env.AUTH_SECRET_ACCESS_PRIVATE_KEY,
     {
-      expiresIn: "1h",
+      expiresIn: ACCESS_TOKEN_EXPIRE_TIME,
     }
   );
 
@@ -43,7 +47,7 @@ authHelper.createRefreshAuthToken = function (_id) {
     },
     process.env.AUTH_SECRET_REFRESH_PRIVATE_KEY,
     {
-      expiresIn: "3d",
+      expiresIn: REFRESH_TOKEN_EXPIRE_TIME,
     }
   );
 
