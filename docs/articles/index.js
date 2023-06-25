@@ -1,5 +1,3 @@
-import { array } from "joi";
-
 const articleComponents = {
   articleAll: {
     get: {
