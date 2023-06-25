@@ -31,6 +31,7 @@ const AuthShema = new Schema({
   /**
    * Refresh Token 생성 시간
    *    만료 시간: 3 days
+   *    TTL: Time To Live => 3 days
    */
   createdAt: {
     type: Date,
