@@ -22,7 +22,16 @@ userController.loginUserRequest = async function (req, res, next) {
   try {
     const { nickname, password } = req.body;
     const foundUser = await userService.loginUserRequest(nickname, password);
-    return res.status(200).send(foundUser);
+    const { refreshToken, accessToken } = foundUser;
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "Strict",
+      maxAge: 3 * 86400,
+    });
+    return res.status(200).send({
+      accessToken: accessToken,
+    });
   } catch (error) {
     next(error);
   }
