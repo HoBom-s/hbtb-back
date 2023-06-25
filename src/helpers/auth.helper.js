@@ -17,7 +17,7 @@ authHelper.createAccessAuthToken = function (_id) {
     {
       _id: _id,
     },
-    process.env.AUTH_SECRET_PRIVATE_KEY,
+    process.env.AUTH_SECRET_ACCESS_PRIVATE_KEY,
     {
       expiresIn: "1h",
     }
@@ -41,14 +41,14 @@ authHelper.createRefreshAuthToken = function (_id) {
     {
       _id: _id,
     },
-    process.env.AUTH_SECRET_PRIVATE_KEY,
+    process.env.AUTH_SECRET_REFRESH_PRIVATE_KEY,
     {
       expiresIn: "3d",
     }
   );
 
   const tokenObj = {};
-  tokenObj.refreshToekn = createdRefreshAuthToken;
+  tokenObj.refreshToken = createdRefreshAuthToken;
 
   return tokenObj;
 };
@@ -82,26 +82,23 @@ authHelper.verifyAccessAuthToekn = function (token) {
  * @returns {Object | boolean}
  */
 authHelper.verifyRefreshAuthToken = function (_id, token) {
-  const errorObject = {};
-  const verifiedRefreshAuthToken = jwt.verify(
-    token,
-    process.AUTH_SECRET_REFRESH_PRIVATE_KEY,
-    (error) => {
-      if (error) {
-        errorObject.name = error.name;
-        errorObject.message = error.message;
-        errorObject.expiredAt = error.expiredAt;
-        errorObject.hasError = true;
-      }
+  try {
+    const verifiedRefreshAuthToken = jwt.verify(
+      token,
+      process.env.AUTH_SECRET_REFRESH_PRIVATE_KEY
+    );
+    const expireTime = verifiedRefreshAuthToken.exp;
+    const expireDate = new Date(expireTime * 1000);
+    if (_id === verifiedRefreshAuthToken._id) {
+      const tokenInfo = {};
+      tokenInfo.expireDate = expireDate;
+      tokenInfo.authCheck = true;
+      return tokenInfo;
     }
-  );
-  if (errorObject.hasError) {
-    return errorObject;
+    return false;
+  } catch (error) {
+    return null;
   }
-  if (_id === verifiedRefreshAuthToken._id) {
-    return true;
-  }
-  return false;
 };
 
 Object.freeze(authHelper);
