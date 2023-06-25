@@ -129,6 +129,15 @@ MongoDB의 Collection에 해당하는 구조를 이 문서에 기록하도록 �
   },
 
   /**
+   * User password
+   */
+  password: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+
+  /**
    * User profile image
    */
   profileImg: {
@@ -151,6 +160,151 @@ MongoDB의 Collection에 해당하는 구조를 이 문서에 기록하도록 �
     type: String,
     required: true,
     default: "Introduce myself",
+  },
+};
+```
+
+## 4. Article Schema 정의
+
+**Article**의 경우 Article **`[게시물]`** 생성 시 게시글을 정의하는 Schema 이다.
+
+```js
+{
+  {
+    /**
+     * Article UUID
+     */
+    _id: {
+      type: String,
+      required: true,
+    },
+
+    /**
+     * Article thumbnail
+     */
+    thumbnail: {
+      type: String,
+      default: "",
+    },
+
+    /**
+     * Article Main Title
+     */
+    title: {
+      type: String,
+      required: true,
+      trim: true,
+      default: "",
+    },
+
+    /**
+     * Article Sub Title (Description under each title)
+     */
+    subtitle: {
+      type: String,
+      required: true,
+      trim: true,
+      default: "",
+    },
+
+    /**
+     * Article temporary contents schema
+     */
+    contents: {
+      type: String,
+      required: true,
+      default: "Temp article contents",
+    },
+
+    /**
+     * Article tags(Tag Collection) - populate
+     */
+    tags: [
+      {
+        type: String,
+        ref: TagModel,
+      },
+    ],
+
+    /**
+     * Article writer(User Collection) - populate
+     */
+    writers: [
+      {
+        type: String,
+        ref: UserModel,
+      },
+    ],
+
+    /**
+     * Article path - when clicking title
+     */
+    path: {
+      type: String,
+      required: true,
+    },
+
+    /**
+     * Article first create date
+     */
+    createdAt: {
+      type: Date,
+      required: true,
+      default: new Date(),
+    },
+
+    /**
+     * Article update date
+     */
+    updatedAt: {
+      type: Date,
+      required: false,
+      default: new Date(),
+    },
+  },
+};
+```
+
+## 5. Auth Schema 정의
+
+**Auth**의 경우 Auth **`[Refresh Token]`** 생성 시 Refresh Token을 정의하는 Schema 이다.
+
+```js
+{
+  /**
+   * Auth UUID
+   */
+  _id: {
+    type: String,
+    required: true,
+  },
+
+  /**
+   * User UUID
+   */
+  userId: {
+    type: String,
+    required: true,
+  },
+
+  /**
+   * Auth Token
+   *    User's refresh token
+   */
+  token: {
+    type: String,
+    required: true,
+  },
+
+  /**
+   * Refresh Token 생성 시간
+   *    만료 시간: 3 days
+   *    TTL: Time To Live => 3 days
+   */
+  createdAt: {
+    type: Date,
+    default: Date.now,
+    expires: 3 * 86400,
   },
 };
 ```

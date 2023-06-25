@@ -1,5 +1,6 @@
 import { v4 as uuid4 } from "uuid";
 import UserModel from "../schema/user.schema";
+import authService from "./auth.service";
 import BcryptHelper from "../helpers/bcrypt.helper";
 import APIErrorHandler from "../helpers/error.helper";
 
@@ -52,7 +53,18 @@ userService.loginUserRequest = async function (nickname, password) {
   const bcryptHelper = new BcryptHelper();
   const isValidUser = bcryptHelper.compareHash(password, hashedPassword);
   if (!isValidUser) throw new APIErrorHandler("The user is not exist!", 404);
-  return foundUser;
+
+  const tokenObject = {};
+  const { _id } = foundUser;
+  const userRefreshToken = await authService.getRefreshTokenByUserId(_id);
+  // 결국 Access Token은 Refresh Token이 새로 발급 되든,
+  // 기존의 것을 유지 하든지 간에 새로운 Access Token을 발급해야 하므로,,,
+  const userAccessToken = await authService.createAccessTokenRequest(_id);
+
+  tokenObject.refreshToken = userRefreshToken;
+  tokenObject.accessToken = userAccessToken;
+
+  return tokenObject;
 };
 
 userService.updateUserRequest = async function (_id, toUpdate) {
