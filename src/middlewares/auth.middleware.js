@@ -13,11 +13,11 @@ function authValidation(req, res, next) {
   const token = req.headers["Authorization"].split("Bearer ")[1];
   try {
     if (!token) {
-      // Token이 없는 경우,,
+      // Access Token이 없는 경우,,
       const errorHandler = new APIErrorHandler("The token is not exist!", 401);
       return res.status(errorHandler.status).send(errorHandler.msg);
     }
-    // AuthHelper를 활용한 AuthToken 검증
+    // AuthHelper를 활용한 Access Token 검증
     const verifiedPayload = authHelper.verifyAccessAuthToekn(token);
     if (!verifiedPayload) {
       const errorHandler = new APIErrorHandler(
