@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { SCHEMA_REFRESH_TOKEN_EXPIRE_TIME } from "../static/static.const";
 
 const Schema = mongoose.Schema;
 
@@ -36,7 +37,7 @@ const AuthShema = new Schema({
   createdAt: {
     type: Date,
     default: Date.now,
-    expires: 3 * 86400,
+    expires: SCHEMA_REFRESH_TOKEN_EXPIRE_TIME,
   },
 });
 
