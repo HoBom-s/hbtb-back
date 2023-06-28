@@ -11,6 +11,19 @@ articleController.getAllArticleRequest = async function (req, res, next) {
   }
 };
 
+articleController.getArticlePerPageRequest = async function (req, res, next) {
+  try {
+    const { pageNumber, perPage } = req.query;
+    const articles = await articleService.getArticlePerPageRequest(
+      pageNumber,
+      perPage
+    );
+    return res.status(200).send(articles);
+  } catch (error) {
+    next(error);
+  }
+};
+
 articleController.createArticleRequest = async function (req, res, next) {
   try {
     const { thumbnail, title, subtitle, contents, tags, writers, path } =

@@ -53,9 +53,39 @@ articleService.getAllArticleRequest = async function () {
   const articles = await ArticleModel.find({})
     .populate("tags")
     .populate("writers")
+    .sort({ createdAt: -1 })
     .exec();
   if (!articles.length) return [];
   return articles;
+};
+
+articleService.getArticlePerPageRequest = async function (pageNumber, perPage) {
+  const curPageNumber = Number.parseInt(pageNumber);
+  const skipPerPageNumber = Number.parseInt(perPage);
+
+  const articles = await ArticleModel.find({})
+    .populate("tags")
+    .populate("writers")
+    .sort({ createdAt: -1 })
+    .skip((curPageNumber - 1) * skipPerPageNumber)
+    .limit(skipPerPageNumber);
+
+  if (!articles.length) return [];
+
+  const resultArticleObject = {};
+
+  const totalPageNumber = (() => {
+    if (articles.length % skipPerPageNumber === 0) {
+      return 1;
+    } else {
+      return Math.ceil(articles.length / skipPerPageNumber);
+    }
+  })();
+
+  resultArticleObject.articles = articles;
+  resultArticleObject.totalPageNumber = totalPageNumber;
+
+  return resultArticleObject;
 };
 
 articleService.createArticleRequest = async function (
