@@ -11,6 +11,7 @@ import articleController from "../controllers/article.controller";
 const router = express.Router();
 
 router.get("/", articleController.getAllArticleRequest);
+router.get("/list", articleController.getArticlePerPageRequest);
 
 router.post(
   "/create",
