@@ -52,6 +52,20 @@ userController.loginUserRequest = async function (req, res, next) {
   }
 };
 
+userController.logoutUserRequest = async function (req, res, next) {
+  try {
+    const { _id } = req.body;
+    const foundUser = await userService.findOneUserById(_id);
+    if (!foundUser) {
+      return res.status(404).send({ message: "Cannot find user" });
+    }
+    res.clearCookie("refreshToken");
+    return res.status(200).send(foundUser);
+  } catch (error) {
+    next(error);
+  }
+};
+
 userController.updateUserRequest = async function (req, res, next) {
   try {
     const { _id } = req.params;

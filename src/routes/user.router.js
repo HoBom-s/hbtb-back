@@ -26,6 +26,8 @@ router.post(
   userController.loginUserRequest
 );
 
+router.post("/logout", authValidation, userController.logoutUserRequest);
+
 router.patch(
   "/update/:_id",
   paramValidation(STATIC_USER_DELETE),
