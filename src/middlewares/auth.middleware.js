@@ -9,9 +9,9 @@ import APIErrorHandler from "../helpers/error.helper";
  * @param {Next} next
  */
 function authValidation(req, res, next) {
-  // Authorization 인증의 Bearer를 가져와야만 한다.
-  const token = req.headers["Authorization"].split("Bearer ")[1];
   try {
+    // Authorization 인증의 Bearer를 가져와야만 한다.
+    const token = req.headers["authorization"].split("Bearer ")[1];
     if (!token) {
       // Access Token이 없는 경우,,
       const errorHandler = new APIErrorHandler("The token is not exist!", 401);

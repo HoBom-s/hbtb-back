@@ -1,4 +1,5 @@
 import express from "express";
+import authValidation from "../middlewares/auth.middleware";
 import bodyValidation from "../middlewares/body.middleware";
 import paramValidation from "../middlewares/parameter.middleware";
 import {
@@ -10,6 +11,8 @@ import {
 import userController from "../controllers/user.controller";
 
 const router = express.Router();
+
+router.get("/me", authValidation, userController.getUserInformationRequest);
 
 router.post(
   "/create",

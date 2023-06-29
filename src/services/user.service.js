@@ -16,6 +16,14 @@ userService.findOneUserRequest = async function (nickname, role) {
   return foundUser;
 };
 
+userService.findOneUserById = async function (_id) {
+  if (!_id) throw new APIErrorHandler("Missing parameter with _id!", 404);
+  const foundUser = await UserModel.findOne({
+    _id: _id,
+  }).exec();
+  return foundUser;
+};
+
 userService.findOneUserByNickname = async function (nickname) {
   if (!nickname)
     throw new APIErrorHandler("Missing parameter with nickname!", 404);
