@@ -63,6 +63,8 @@ articleService.getArticlePerPageRequest = async function (pageNumber, perPage) {
   const curPageNumber = Number.parseInt(pageNumber);
   const skipPerPageNumber = Number.parseInt(perPage);
 
+  const totalArticlesCount = await ArticleModel.count();
+
   const articles = await ArticleModel.find({})
     .populate("tags")
     .populate("writers")
@@ -75,10 +77,10 @@ articleService.getArticlePerPageRequest = async function (pageNumber, perPage) {
   const resultArticleObject = {};
 
   const totalPageNumber = (() => {
-    if (articles.length % skipPerPageNumber === 0) {
+    if (totalArticlesCount % skipPerPageNumber === 0) {
       return 1;
     } else {
-      return Math.ceil(articles.length / skipPerPageNumber);
+      return Math.ceil(totalArticlesCount / skipPerPageNumber);
     }
   })();
 
