@@ -24,6 +24,18 @@ articleController.getArticlePerPageRequest = async function (req, res, next) {
   }
 };
 
+articleController.getArticleSearchRequest = async function (req, res, next) {
+  try {
+    const { keyword } = req.query;
+    const articleSearchResult = await articleService.getArticleSearchRequest(
+      keyword
+    );
+    return res.status(200).send(articleSearchResult);
+  } catch (error) {
+    next(error);
+  }
+};
+
 articleController.createArticleRequest = async function (req, res, next) {
   try {
     const { thumbnail, title, subtitle, contents, tags, writers, path } =

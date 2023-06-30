@@ -90,6 +90,24 @@ articleService.getArticlePerPageRequest = async function (pageNumber, perPage) {
   return resultArticleObject;
 };
 
+articleService.getArticleSearchRequest = async function (keyword) {
+  const regexArticleSearchKeyword = new RegExp(keyword);
+  const articleSearchResult = await ArticleModel.find({
+    $or: [
+      { title: { $regex: regexArticleSearchKeyword, $options: "i" } },
+      { subtitle: { $regex: regexArticleSearchKeyword, $options: "i" } },
+    ],
+  })
+    .populate({
+      path: "tags",
+      match: { title: { $regex: regexArticleSearchKeyword, $options: "i" } },
+    })
+    .populate("writers")
+    .sort({ createdAt: -1 })
+    .lean();
+  return articleSearchResult;
+};
+
 articleService.createArticleRequest = async function (
   thumbnail,
   title,
