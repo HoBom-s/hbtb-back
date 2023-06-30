@@ -12,6 +12,7 @@ const router = express.Router();
 
 router.get("/", articleController.getAllArticleRequest);
 router.get("/list", articleController.getArticlePerPageRequest);
+router.get("/search", articleController.getArticleSearchRequest);
 
 router.post(
   "/create",
