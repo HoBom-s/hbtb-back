@@ -1,4 +1,5 @@
 import express from "express";
+import authValidation from "../middlewares/auth.middleware";
 import bodyValidation from "../middlewares/body.middleware";
 import paramValidation from "../middlewares/parameter.middleware";
 import {
@@ -11,6 +12,8 @@ import userController from "../controllers/user.controller";
 
 const router = express.Router();
 
+router.get("/me", authValidation, userController.getUserInformationRequest);
+
 router.post(
   "/create",
   bodyValidation(STATIC_USER),
@@ -22,6 +25,8 @@ router.post(
   bodyValidation(STATIC_USER_LOGIN),
   userController.loginUserRequest
 );
+
+router.post("/logout", authValidation, userController.logoutUserRequest);
 
 router.patch(
   "/update/:_id",

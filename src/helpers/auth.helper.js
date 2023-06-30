@@ -68,7 +68,7 @@ authHelper.createRefreshAuthToken = function (_id) {
 authHelper.verifyAccessAuthToekn = function (token) {
   const verifiedAuthToken = jwt.verify(
     token,
-    process.env.AUTH_SECRET_PRIVATE_KEY
+    process.env.AUTH_SECRET_ACCESS_PRIVATE_KEY
   );
   const _id = verifiedAuthToken._id;
   if (!_id) {

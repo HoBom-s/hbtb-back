@@ -2,6 +2,21 @@ import userService from "../services/user.service";
 
 const userController = {};
 
+userController.getUserInformationRequest = async function (req, res, next) {
+  try {
+    const _id = req.userId;
+    const foundUser = await userService.findOneUserById(_id);
+    if (!foundUser) {
+      return res.status(404).send({
+        message: "Cannot find user!",
+      });
+    }
+    return res.status(200).send(foundUser);
+  } catch (error) {
+    next(error);
+  }
+};
+
 userController.createUserRequest = async function (req, res, next) {
   try {
     const { nickname, password, profileImg, role, introduction } = req.body;
@@ -32,6 +47,20 @@ userController.loginUserRequest = async function (req, res, next) {
     return res.status(200).send({
       accessToken: accessToken,
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+userController.logoutUserRequest = async function (req, res, next) {
+  try {
+    const { _id } = req.body;
+    const foundUser = await userService.findOneUserById(_id);
+    if (!foundUser) {
+      return res.status(404).send({ message: "Cannot find user" });
+    }
+    res.clearCookie("refreshToken");
+    return res.status(200).send(foundUser);
   } catch (error) {
     next(error);
   }
