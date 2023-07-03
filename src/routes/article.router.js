@@ -13,6 +13,7 @@ const router = express.Router();
 
 router.get("/", articleController.getAllArticleRequest);
 router.get("/list", articleController.getArticlePerPageRequest);
+router.get("/find/:_id", articleController.getArticleFindByIdRequest);
 router.get("/search", articleController.getArticleSearchRequest);
 
 router.post(

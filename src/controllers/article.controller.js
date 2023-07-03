@@ -24,6 +24,16 @@ articleController.getArticlePerPageRequest = async function (req, res, next) {
   }
 };
 
+articleController.getArticleFindByIdRequest = async function (req, res, next) {
+  try {
+    const { _id } = req.params;
+    const foundArticle = await articleService.getArticleFindByIdRequest(_id);
+    return res.status(200).send(foundArticle);
+  } catch (error) {
+    next(error);
+  }
+};
+
 articleController.getArticleSearchRequest = async function (req, res, next) {
   try {
     const { keyword } = req.query;

@@ -90,6 +90,15 @@ articleService.getArticlePerPageRequest = async function (pageNumber, perPage) {
   return resultArticleObject;
 };
 
+articleService.getArticleFindByIdRequest = async function (_id) {
+  const foundArticle = await ArticleModel.findOne({
+    _id: _id,
+  })
+    .populate("tags")
+    .populate("writers");
+  return foundArticle;
+};
+
 articleService.getArticleSearchRequest = async function (keyword) {
   const regexArticleSearchKeyword = new RegExp(keyword);
   const articleSearchResult = await ArticleModel.find({
