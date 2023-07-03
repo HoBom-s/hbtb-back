@@ -24,10 +24,14 @@ articleController.getArticlePerPageRequest = async function (req, res, next) {
   }
 };
 
-articleController.getArticleFindByIdRequest = async function (req, res, next) {
+articleController.getArticleFindByPathRequest = async function (
+  req,
+  res,
+  next
+) {
   try {
-    const { _id } = req.params;
-    const foundArticle = await articleService.getArticleFindByIdRequest(_id);
+    const { path } = req.params;
+    const foundArticle = await articleService.getArticleFindByPathRequest(path);
     return res.status(200).send(foundArticle);
   } catch (error) {
     next(error);

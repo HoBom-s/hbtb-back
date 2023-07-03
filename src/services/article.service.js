@@ -90,9 +90,9 @@ articleService.getArticlePerPageRequest = async function (pageNumber, perPage) {
   return resultArticleObject;
 };
 
-articleService.getArticleFindByIdRequest = async function (_id) {
+articleService.getArticleFindByPathRequest = async function (path) {
   const foundArticle = await ArticleModel.findOne({
-    _id: _id,
+    path: `/${path}`,
   })
     .populate("tags")
     .populate("writers");
