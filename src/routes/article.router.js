@@ -1,4 +1,5 @@
 import express from "express";
+import authValidation from "../middlewares/auth.middleware";
 import bodyValidation from "../middlewares/body.middleware";
 import paramValidation from "../middlewares/parameter.middleware";
 import {
@@ -16,6 +17,7 @@ router.get("/search", articleController.getArticleSearchRequest);
 
 router.post(
   "/create",
+  authValidation,
   bodyValidation(STATIC_ARTICLE),
   articleController.createArticleRequest
 );
