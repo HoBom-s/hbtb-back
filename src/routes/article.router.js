@@ -25,6 +25,7 @@ router.post(
 
 router.patch(
   "/update/:_id",
+  authValidation,
   paramValidation(STATIC_ARTICLE_DELETE),
   bodyValidation(STATIC_ARTICLE_UPDATE),
   articleController.updateArticleRequest
@@ -32,6 +33,7 @@ router.patch(
 
 router.delete(
   "/delete/:_id",
+  authValidation,
   paramValidation(STATIC_ARTICLE_DELETE),
   articleController.deleteArticleRequest
 );
