@@ -147,6 +147,7 @@ articleService.createArticleRequest = async function (
     tags: res[0],
     writers: res[1],
     path: path,
+    createdAt: new Date(),
   });
 
   return createdArticle;
