@@ -78,7 +78,7 @@ articleService.getArticlePerPageRequest = async function (pageNumber, perPage) {
 
   const totalPageNumber = (() => {
     if (totalArticlesCount % skipPerPageNumber === 0) {
-      return 1;
+      return Math.floor(totalArticlesCount / skipPerPageNumber);
     } else {
       return Math.ceil(totalArticlesCount / skipPerPageNumber);
     }
